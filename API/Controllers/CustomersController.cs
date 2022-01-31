@@ -43,6 +43,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
+        [Route("DeleteCustomer")]
         public IActionResult DeleteCustomer(int id)
         {
             try
@@ -52,17 +53,21 @@ namespace API.Controllers
                 {
                     _appContext.Clients.Remove(client);
                     _appContext.SaveChanges();
+                    return Ok();
                 }
-
-                return Ok();
+                else
+                {
+                    return NotFound();
+                }
             }
             catch
             {
-                return StatusCode(500); 
+                return BadRequest(); 
             }
         }
 
         [HttpPost]
+        [Route("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer()
         {
             try
@@ -72,22 +77,27 @@ namespace API.Controllers
                     var client = JsonConvert.DeserializeObject<Client>(await reader.ReadToEndAsync());
                     _appContext.Add(client);
                     _appContext.SaveChanges();
+                    return Created("", client);
                 }
-
-                return Ok();
             }
             catch
             {
-                return StatusCode(500);
+                return BadRequest();
             }
         }
 
         [HttpPut]
+        [Route("UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomer(int id)
         {
             try
             {
                 var oldClient = _appContext.Clients.FirstOrDefault(x => x.Id == id);
+                if (oldClient == null)
+                {
+                    return NotFound();
+                }
+
                 using (var reader = new StreamReader(Request.Body))
                 {
                     var client = JsonConvert.DeserializeObject<Client>(await reader.ReadToEndAsync());
@@ -99,7 +109,87 @@ namespace API.Controllers
             }
             catch
             {
-                return StatusCode(500);
+                return BadRequest();
+            }
+        }
+        #endregion
+
+        #region Cities
+        [HttpGet]
+        [Route("CitiesList")]
+        public IActionResult CitiesList()
+        {
+            return new JsonResult(_appContext.Cities)
+            {
+                StatusCode = 200
+            };
+        }
+
+        [HttpPost]
+        [Route("CreateCity")]
+        public async Task<IActionResult> CreateCity()
+        {
+            try
+            {
+                using (var reader = new StreamReader(Request.Body))
+                {
+                    var city = JsonConvert.DeserializeObject<City>(await reader.ReadToEndAsync());
+                    _appContext.Cities.Add(city);
+                    _appContext.SaveChanges();
+                    return Created("", city);
+                }
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteCity")]
+        public IActionResult DeleteCity(int id)
+        {
+            var city = _appContext.Cities.FirstOrDefault(x => x.Id == id);
+            try
+            {
+                if (city != null)
+                {
+                    _appContext.Cities.Remove(city);
+                    _appContext.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateCity")]
+        public IActionResult UpdateCity(int id, string name)
+        {
+            var city = _appContext.Cities.FirstOrDefault(x => x.Id == id);
+            try
+            {
+                if (city != null)
+                {
+                    city.Name = name;
+                    _appContext.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
         #endregion

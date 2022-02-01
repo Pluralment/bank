@@ -10,9 +10,7 @@ using Newtonsoft.Json;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("Customers")]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseApiController
     {
         DataContext _appContext;
         public CustomersController(DataContext appContext)
@@ -32,8 +30,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpGet]
-        [Route("Details")]
+        [HttpGet("Details")]
         public IActionResult Details(int id)
         {
             return new JsonResult(_appContext.Clients.FirstOrDefault(x => x.Id == id))
@@ -42,8 +39,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpDelete]
-        [Route("DeleteCustomer")]
+        [HttpDelete("DeleteCustomer")]
         public IActionResult DeleteCustomer(int id)
         {
             try
@@ -66,8 +62,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("CreateCustomer")]
+        [HttpPost("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer()
         {
             try
@@ -86,8 +81,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("UpdateCustomer")]
+        [HttpPut("UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomer(int id)
         {
             try
@@ -115,8 +109,7 @@ namespace API.Controllers
         #endregion
 
         #region Cities
-        [HttpGet]
-        [Route("CitiesList")]
+        [HttpGet("CitiesList")]
         public IActionResult CitiesList()
         {
             return new JsonResult(_appContext.Cities)
@@ -125,8 +118,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpPost]
-        [Route("CreateCity")]
+        [HttpPost("CreateCity")]
         public async Task<IActionResult> CreateCity()
         {
             try
@@ -145,8 +137,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("DeleteCity")]
+        [HttpDelete("DeleteCity")]
         public IActionResult DeleteCity(int id)
         {
             var city = _appContext.Cities.FirstOrDefault(x => x.Id == id);
@@ -169,8 +160,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("UpdateCity")]
+        [HttpPut("UpdateCity")]
         public IActionResult UpdateCity(int id, string name)
         {
             var city = _appContext.Cities.FirstOrDefault(x => x.Id == id);

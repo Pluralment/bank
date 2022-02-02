@@ -1,18 +1,74 @@
-﻿using API.Data;
-using API.Models;
+﻿using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using API.Interfaces;
 
 namespace API.Controllers
 {
-    public class CustomersController : BaseApiController
+    public class ClientController : BaseApiController
     {
-        DataContext _appContext;
+        IUnitOfWork _unitOfWork;
+        public ClientController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        #region Customer related methods
+        [HttpGet("", Name = "GetClients")]
+        public async Task<ActionResult<IEnumerable<Client>>> ClientList()
+        {
+            var clients = await _unitOfWork.ClientRepository.GetClientsAsync();
+            return Ok(clients);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Client>> Details(int id)
+        {
+            var client = await _unitOfWork.ClientRepository.GetClientByIdAsync(id);
+            return Ok(client);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClient(int id)
+        {
+            var client = await _unitOfWork.ClientRepository.GetClientByIdAsync(id);
+            _unitOfWork.ClientRepository.DeleteClient(client);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Cannot delete client");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Client>> CreateClient(Client client)
+        {
+            var createdClient = await _unitOfWork.ClientRepository.CreateClient(client);
+
+            if (await _unitOfWork.Complete())
+            {
+                return CreatedAtRoute("GetClients", createdClient);
+            }
+
+            return BadRequest("Cannot create client");
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateClient(Client client)
+        {
+            _unitOfWork.ClientRepository.Update(client);
+
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Error while updating client");
+        }
+        #endregion
+
+
+        /* DataContext _appContext;
         public CustomersController(DataContext appContext)
         {
             _appContext = appContext;
@@ -24,9 +80,9 @@ namespace API.Controllers
         [Route("CustomersList")]
         public IActionResult CustomerList()
         {
-            return new JsonResult(_appContext.Clients) 
-            { 
-                StatusCode = 200 
+            return new JsonResult(_appContext.Clients)
+            {
+                StatusCode = 200
             };
         }
 
@@ -58,7 +114,7 @@ namespace API.Controllers
             }
             catch
             {
-                return BadRequest(); 
+                return BadRequest();
             }
         }
 
@@ -182,6 +238,6 @@ namespace API.Controllers
                 return BadRequest();
             }
         }
-        #endregion
+        #endregion */
     }
 }

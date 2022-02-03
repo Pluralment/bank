@@ -1,0 +1,40 @@
+[
+  '{{repeat(3)}}',
+  {
+    Name: '{{firstName(gender())}}',
+    Surname: '{{surname()}}',
+    FatherName: '{{lorem(1, "words")}}',
+    DateOfBirth: '{{date(new Date(1956, 0, 1), new Date(1999, 1, 1), "YYYY-MM-ddThh:mm:ss.ffff")}}',
+    Gender: '{{bool()}}',
+    PassportSerial: '{{random("MP", "MB", "KB", "TK", "EC")}}',
+    PassportNumber: '{{integer(1234567, 9876543)}}',
+    IssuedBy: '{{lorem(3, "words")}}',
+    IssuedDate: '{{date(new Date(2010, 1, 1), new Date(2017, 1, 1), "YYYY-MM-ddThh:mm:ss.ffff")}}',
+    IdentifyNumber: '{{integer(3010156, 4311299) + random("A", "B", "C", "H", "K", "E", "M") + integer(100, 999) + random("PB", "BA", "BI") + repeat(0, 9)}}',
+    CityOfResidence: {
+      Name: '{{city()}}'
+    },
+    AddressOfResidence: '{{street() + ", " + repeat(1, 50)}}',
+    HomePhone: '{{phone("(xx) xxx-xx-xx")}}',
+    CellPhone: '{{phone("(xx) xxx-xx-xx")}}',
+    Email: '{{email()}}',
+    PlaceOfWork: '{{street() + ", " + repeat(1, 50)}}',
+    Position: '{{random("clerk", "programmer", "lawyer", "taxi driver", "correspondent", "school teacher", "boxer")}}',
+    LivingCity: {
+      Name: '{{city()}}'
+    },
+    LivingAddress: '{{street() + ", " + repeat(1, 50)}}',
+    FamilyPosition: {
+      Name: '{{random("Холост", "Женат")}}'
+    },
+    Citizen: {
+      Name: '{{country()}}'
+    },
+    Invalidity: {
+      Name: '{{random("Отсутствует", "1 группа", "2 группа", "3 группа")}}'
+    },
+    Retired: '{{bool()}}',
+    MonthlyIncome: '{{floating(100, 5000, 2)}}',
+    Military: '{{bool()}}'
+  }
+]

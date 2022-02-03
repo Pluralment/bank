@@ -10,6 +10,23 @@ namespace API.Data
 {
     public class Seed
     {
+
+        public static async Task SeedClients(DataContext context)
+        {
+            if (await context.Clients.AnyAsync()) return;
+
+            var clientsData = await System.IO.File.ReadAllTextAsync("Data/Seeds/ClientsSeedData.json");
+            var clients = JsonSerializer.Deserialize<List<Client>>(clientsData);
+            if (clients == null) return;
+
+            foreach (var client in clients)
+            {
+                await context.Clients.AddAsync(client);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
         public static async Task SeedCities(DataContext context)
         {
             if (await context.Cities.AnyAsync()) return;

@@ -1,0 +1,113 @@
+[
+    {
+      "Name": "Mooney",
+      "Surname": "Randall",
+      "FatherName": "est",
+      "DateOfBirth": "1987-08-28T10:09:25.986986",
+      "Gender": true,
+      "PassportSerial": "TK",
+      "PassportNumber": "8875435",
+      "IssuedBy": "esse ut consectetur",
+      "IssuedDate": "2011-11-02T10:03:35.693693",
+      "IdentifyNumber": "3944843E354BA9",
+      "CityOfResidence": {
+        "Name": "Westphalia"
+      },
+      "AddressOfResidence": "Stuart Street, 8",
+      "HomePhone": "(82) 341-52-16",
+      "CellPhone": "(90) 243-32-64",
+      "Email": "mooneyrandall@orbaxter.com",
+      "PlaceOfWork": "Lee Avenue, 18",
+      "Position": "taxi driver",
+      "LivingCity": {
+        "Name": "Kingstowne"
+      },
+      "LivingAddress": "Cypress Avenue, 45",
+      "FamilyPosition": {
+        "Name": "Женат"
+      },
+      "Citizen": {
+        "Name": "Hungary"
+      },
+      "Invalidity": {
+        "Name": "3 группа"
+      },
+      "Retired": true,
+      "MonthlyIncome": 3392.46,
+      "Military": true
+    },
+    {
+      "Name": "Shepherd",
+      "Surname": "Bryant",
+      "FatherName": "qui",
+      "DateOfBirth": "1978-02-19T08:19:17.683683",
+      "Gender": false,
+      "PassportSerial": "TK",
+      "PassportNumber": "4725220",
+      "IssuedBy": "ea reprehenderit magna",
+      "IssuedDate": "2017-01-05T09:24:43.869869",
+      "IdentifyNumber": "4036891B946BI3",
+      "CityOfResidence": {
+        "Name": "Bawcomville"
+      },
+      "AddressOfResidence": "Junius Street, 16",
+      "HomePhone": "(80) 148-03-50",
+      "CellPhone": "(93) 050-32-69",
+      "Email": "shepherdbryant@orbaxter.com",
+      "PlaceOfWork": "Alton Place, 27",
+      "Position": "school teacher",
+      "LivingCity": {
+        "Name": "Cliffside"
+      },
+      "LivingAddress": "Chauncey Street, 3",
+      "FamilyPosition": {
+        "Name": "Женат"
+      },
+      "Citizen": {
+        "Name": "Iceland"
+      },
+      "Invalidity": {
+        "Name": "1 группа"
+      },
+      "Retired": true,
+      "MonthlyIncome": 2254.67,
+      "Military": true
+    },
+    {
+      "Name": "Mcneil",
+      "Surname": "Christian",
+      "FatherName": "quis",
+      "DateOfBirth": "1963-04-13T05:33:51.878878",
+      "Gender": false,
+      "PassportSerial": "MB",
+      "PassportNumber": "4499774",
+      "IssuedBy": "incididunt excepteur dolor",
+      "IssuedDate": "2010-04-05T07:15:00.753753",
+      "IdentifyNumber": "3796725A294PB2",
+      "CityOfResidence": {
+        "Name": "Lookingglass"
+      },
+      "AddressOfResidence": "Stuyvesant Avenue, 49",
+      "HomePhone": "(86) 559-92-21",
+      "CellPhone": "(92) 650-73-17",
+      "Email": "mcneilchristian@orbaxter.com",
+      "PlaceOfWork": "Lois Avenue, 42",
+      "Position": "lawyer",
+      "LivingCity": {
+        "Name": "Edgewater"
+      },
+      "LivingAddress": "Surf Avenue, 8",
+      "FamilyPosition": {
+        "Name": "Женат"
+      },
+      "Citizen": {
+        "Name": "Panama"
+      },
+      "Invalidity": {
+        "Name": "1 группа"
+      },
+      "Retired": true,
+      "MonthlyIncome": 1653.13,
+      "Military": true
+    }
+]

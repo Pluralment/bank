@@ -27,6 +27,7 @@ namespace API
                 await Seed.SeedCountries(context);
                 await Seed.SeedFamilyPositions(context);
                 await Seed.SeedInvalidities(context);
+                await Seed.SeedClients(context);
             }
             catch (Exception ex)
             {

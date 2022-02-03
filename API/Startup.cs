@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,7 @@ namespace API
         {
             services.AddControllers();
             services.AddCors();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<DataContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });

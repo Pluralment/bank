@@ -37,6 +37,11 @@ namespace API.Data
             return await _context.Cities.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<City> GetCityByName(string name)
+        {
+            return await _context.Cities.FirstOrDefaultAsync(x => x.Name == name);
+        }
+
         public void Update(City city)
         {
             _context.Cities.Update(city);

@@ -18,7 +18,12 @@ namespace API.Data
         public IClientRepository ClientRepository => new ClientRepository(_context);
 
         public ICityRepository CityRepository => new CityRepository(_context);
-        
+
+        public IFamilyPositionRepository FamilyPositionRepository => new FamilyPositionRepository(_context);
+
+        public ICountryRepository CountryRepository => new CountryRepository(_context);
+
+        public IInvalidityRepository InvalidityRepository => new InvalidityRepository(_context);
 
         public async Task<bool> Complete()
         {

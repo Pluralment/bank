@@ -31,6 +31,7 @@ namespace API
             services.AddControllers();
             services.AddCors();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<DataContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -49,7 +50,7 @@ namespace API
             app.UseRouting();
 
             app.UseCors(builder => builder
-                .WithOrigins("https://localhost:4200")
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
             );

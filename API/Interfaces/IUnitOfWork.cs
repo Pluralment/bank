@@ -10,6 +10,9 @@ namespace API.Interfaces
     {
         IClientRepository ClientRepository { get; }
         ICityRepository CityRepository { get; }
+        IFamilyPositionRepository FamilyPositionRepository { get; }
+        ICountryRepository CountryRepository { get; }
+        IInvalidityRepository InvalidityRepository { get; }
 
         Task<bool> Complete();
 

@@ -11,6 +11,8 @@ namespace API.Interfaces
         Task<City> CreateCity(City city);
 
         Task<City> GetCity(int id);
+        
+        Task<City> GetCityByName(string name);
 
         Task<IEnumerable<City>> GetCities();
 

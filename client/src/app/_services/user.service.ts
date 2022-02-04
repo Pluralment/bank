@@ -12,18 +12,18 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   createUser(user: User) {
-    return this.http.post<User>(this.baseUrl + 'users', user);
+    return this.http.post<User>(this.baseUrl + 'clients', user);
   }
 
   getUsers() {
-    return this.http.get<User[]>(this.baseUrl + 'users');
+    return this.http.get<User[]>(this.baseUrl + 'clients');
   }
 
   updateUser(user: User) {
-    return this.http.put<User>(this.baseUrl + 'users', user);
+    return this.http.put<User>(this.baseUrl + 'clients', user);
   }
 
   deleteUser(id: number) {
-    return this.http.delete(this.baseUrl + 'users/' + id, {});
+    return this.http.delete(this.baseUrl + 'clients/' + id, {});
   }
 }

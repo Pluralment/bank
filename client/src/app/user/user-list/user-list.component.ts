@@ -24,7 +24,11 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(userId: number) {
-    console.log(userId);
+    this.userService.deleteUser(userId).subscribe(() => {
+      this.users = this.users.filter((element, index, array) => { 
+        return (element.id !== userId); 
+      });
+    });
   }
 
   updateUser(userId: number) {

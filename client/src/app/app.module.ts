@@ -11,6 +11,8 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserCreationComponent } from './user/user-creation/user-creation.component';
+import { ToastrModule } from 'ngx-toastr';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { UserCreationComponent } from './user/user-creation/user-creation.compon
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

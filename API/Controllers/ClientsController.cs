@@ -40,7 +40,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClient(int id)
+        public async Task<ActionResult> DeleteClient(int id)
         {
             var client = await _unitOfWork.ClientRepository.GetClientByIdAsync(id);
             _unitOfWork.ClientRepository.DeleteClient(client);

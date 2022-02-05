@@ -11,6 +11,7 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserCreationComponent } from './user/user-creation/user-creation.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserCreationComponent } from './user/user-creation/user-creation.compon
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

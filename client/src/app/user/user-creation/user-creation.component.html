@@ -35,7 +35,8 @@
 
     <div class="mb-3 form-group">
         <label>Номер паспорта</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["passportNumber"]'>
+        <input class="form-control" type="text" [formControl]='$any(userForm).controls["passportNumber"]'
+        tooltip="Номер паспорта должен состоять из 7 цифр" placement="top">
     </div>
 
     <div class="mb-3 form-group">

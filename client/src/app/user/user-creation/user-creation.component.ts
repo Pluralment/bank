@@ -22,6 +22,11 @@ export class UserCreationComponent implements OnInit {
   countries: Country[];
   invalidities: Invalidity[];
 
+  passportNumberPattern = new RegExp("^[0-9]{7}");
+  cellPhonePattern = new RegExp("^\\+375[1-9]{2}\s?[1-9]\d{2}-?\d{2}-?\d{2}");
+  homePhonePattern = new RegExp("^[1-9]\d{2}-?\d{2}-?\d{2}");
+  identifyNumberPattern = new RegExp("^[1-6][0-3]\d[0-1][1-9]\d{2}[ABCHKEM]\d{3}(PB|BA|BI)\d");
+
   constructor(private userService: UserService,
     private formBuilder: FormBuilder, 
     private cityService: CityService,
@@ -38,14 +43,14 @@ export class UserCreationComponent implements OnInit {
       dateOfBirth: [Date, Validators.required],
       gender: [false, Validators.required],
       passportSerial: ["", Validators.required],
-      passportNumber: ["", Validators.required],
+      passportNumber: ["", [Validators.required, Validators.pattern(this.passportNumberPattern)]],
       issuedBy: ["", [Validators.required]],
       issuedDate: [Date, Validators.required],
-      identifyNumber: ["", Validators.required],
+      identifyNumber: ["", [Validators.required, Validators.pattern(this.identifyNumberPattern)]],
       cityOfResidence: ["", [Validators.required]],
       addressOfResidence: ["", Validators.required],
-      homePhone: [""],
-      cellPhone: [""],
+      homePhone: ["", Validators.pattern(this.homePhonePattern)],
+      cellPhone: ["", Validators.pattern(this.cellPhonePattern)],
       email: ["", Validators.email],
       placeOfWork: [""],
       position: [""],

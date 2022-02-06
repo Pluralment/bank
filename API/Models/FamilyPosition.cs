@@ -11,8 +11,8 @@ namespace API.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(80)]
+        [Required(ErrorMessage = "Name is required")]
+        [MaxLength(80, ErrorMessage = "Length of Name should be less than 80")]
         public string Name { get; set; }
     }
 }

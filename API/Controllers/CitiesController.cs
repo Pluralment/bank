@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCity(int id)
         {
-            var city = await _unitOfWork.CityRepository.GetCity(id);
+            var city = await _unitOfWork.CityRepository.GetCityById(id);
             _unitOfWork.CityRepository.DeleteCity(city);
 
             if (await _unitOfWork.Complete()) return Ok();

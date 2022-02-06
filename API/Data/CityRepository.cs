@@ -32,7 +32,7 @@ namespace API.Data
             return await _context.Cities.ToListAsync();
         }
 
-        public async Task<City> GetCity(int id)
+        public async Task<City> GetCityById(int id)
         {
             return await _context.Cities.FirstOrDefaultAsync(x => x.Id == id);
         }

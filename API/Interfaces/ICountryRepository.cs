@@ -11,5 +11,7 @@ namespace API.Interfaces
         Task<IEnumerable<Country>> GetCountries();
         
         Task<Country> GetCountryByName(string name);
+
+        Task<Country> GetCountryById(int id);
     }
 }

@@ -11,5 +11,7 @@ namespace API.Interfaces
         Task<IEnumerable<Invalidity>> GetInvalidityTypes();
 
         Task<Invalidity> GetInvalidityByName(string name);
+
+        Task<Invalidity> GetInvalidityById(int id);
     }
 }

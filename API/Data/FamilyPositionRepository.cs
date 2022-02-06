@@ -26,5 +26,10 @@ namespace API.Data
         {
             return await _context.FamilyPositions.ToListAsync();
         }
+
+        public async Task<FamilyPosition> GetFamilyPositionById(int id)
+        {
+            return await _context.FamilyPositions.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

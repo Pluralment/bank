@@ -11,5 +11,7 @@ namespace API.Interfaces
         Task<IEnumerable<FamilyPosition>> GetFamilyPositions();
 
         Task<FamilyPosition> GetFamilyPositionByName(string name);
+
+        Task<FamilyPosition> GetFamilyPositionById(int id);
     }
 }

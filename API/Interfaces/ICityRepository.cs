@@ -10,7 +10,7 @@ namespace API.Interfaces
     {
         Task<City> CreateCity(City city);
 
-        Task<City> GetCity(int id);
+        Task<City> GetCityById(int id);
         
         Task<City> GetCityByName(string name);
 

@@ -17,6 +17,11 @@ namespace API.Data
             _context = context;
         }
 
+        public async Task<Invalidity> GetInvalidityById(int id)
+        {
+            return await _context.Invalidities.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Invalidity> GetInvalidityByName(string name)
         {
             return await _context.Invalidities.FirstOrDefaultAsync(x => x.Name == name);

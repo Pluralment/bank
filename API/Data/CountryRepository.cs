@@ -21,6 +21,11 @@ namespace API.Data
             return await _context.Countries.ToListAsync();
         }
 
+        public async Task<Country> GetCountryById(int id)
+        {
+            return await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Country> GetCountryByName(string name)
         {
             return await _context.Countries.FirstOrDefaultAsync(x => x.Name == name);

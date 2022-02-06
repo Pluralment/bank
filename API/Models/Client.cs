@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.ValidationAttributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
+    [ClientEntityValidation]
     public class Client
     {
         [Key]
@@ -27,7 +29,6 @@ namespace API.Models
         public DateTime DateOfBirth { get; set; }
 
         [Required]
-        [MaxLength(80)]
         public bool Gender { get; set; }
 
         [Required]
@@ -81,14 +82,11 @@ namespace API.Models
         public Invalidity Invalidity { get; set; }
 
         [Required]
-        [MaxLength(80)]
         public bool Retired { get; set; }
 
-        [MaxLength(80)]
         public decimal MonthlyIncome { get; set; }
         
         [Required]
-        [MaxLength(80)]
         public bool Military { get; set; }
     }
 }

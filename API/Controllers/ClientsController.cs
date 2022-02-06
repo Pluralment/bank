@@ -51,18 +51,22 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Client>> CreateClient(ClientDto clientDto)
+        public async Task<ActionResult<Client>> CreateClient(Client client)
         {
-            Client client = _mapper.Map<ClientDto, Client>(clientDto);
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => x.Value);
+                return BadRequest(errors);
+            }
 
-            client.CityOfResidence = await _unitOfWork.CityRepository.GetCityByName(client.CityOfResidence.Name);
-            client.LivingCity = await _unitOfWork.CityRepository.GetCityByName(client.LivingCity.Name);
-            client.FamilyPosition = await _unitOfWork.FamilyPositionRepository.GetFamilyPositionByName(client.FamilyPosition.Name);
-            client.Citizen = await _unitOfWork.CountryRepository.GetCountryByName(client.Citizen.Name);
-            client.Invalidity = await _unitOfWork.InvalidityRepository.GetInvalidityByName(client.Invalidity.Name);
-
+            client.CityOfResidence = await _unitOfWork.CityRepository.GetCityById(client.CityOfResidence.Id);
+            client.LivingCity = await _unitOfWork.CityRepository.GetCityById(client.LivingCity.Id);
+            client.FamilyPosition = await _unitOfWork.FamilyPositionRepository.GetFamilyPositionById(client.FamilyPosition.Id);
+            client.Citizen = await _unitOfWork.CountryRepository.GetCountryById(client.Citizen.Id);
+            client.Invalidity = await _unitOfWork.InvalidityRepository.GetInvalidityById(client.Invalidity.Id);
+            
             var createdClient = await _unitOfWork.ClientRepository.CreateClient(client);
-
+            
             if (await _unitOfWork.Complete())
             {
                 return CreatedAtRoute("GetClients", createdClient);

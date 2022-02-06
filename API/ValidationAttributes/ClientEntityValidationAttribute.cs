@@ -37,11 +37,6 @@ namespace API.ValidationAttributes
                 return new ValidationResult("Name, Surname, FatherName should not be a number");
             }
 
-            if (string.IsNullOrWhiteSpace(client.Name) || string.IsNullOrWhiteSpace(client.Surname) || string.IsNullOrWhiteSpace(client.FatherName))
-            {
-                return new ValidationResult("Name, Surname, FatherName should not be whitespace or empty");
-            }
-
             return ValidationResult.Success;
         }
     }

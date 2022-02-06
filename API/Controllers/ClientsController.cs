@@ -59,11 +59,11 @@ namespace API.Controllers
                 return BadRequest(errors);
             }
 
-            client.CityOfResidence = await _unitOfWork.CityRepository.GetCityById(client.CityOfResidence.Id);
-            client.LivingCity = await _unitOfWork.CityRepository.GetCityById(client.LivingCity.Id);
-            client.FamilyPosition = await _unitOfWork.FamilyPositionRepository.GetFamilyPositionById(client.FamilyPosition.Id);
-            client.Citizen = await _unitOfWork.CountryRepository.GetCountryById(client.Citizen.Id);
-            client.Invalidity = await _unitOfWork.InvalidityRepository.GetInvalidityById(client.Invalidity.Id);
+            client.CityOfResidence = client.CityOfResidence != null ? await _unitOfWork.CityRepository.GetCityById(client.CityOfResidence.Id) : null;
+            client.LivingCity = client.LivingCity != null ? await _unitOfWork.CityRepository.GetCityById(client.LivingCity.Id) : null;
+            client.FamilyPosition = client.FamilyPosition != null ? await _unitOfWork.FamilyPositionRepository.GetFamilyPositionById(client.FamilyPosition.Id) : null;
+            client.Citizen = client.Citizen != null ? await _unitOfWork.CountryRepository.GetCountryById(client.Citizen.Id) : null;
+            client.Invalidity = client.Invalidity != null ? await _unitOfWork.InvalidityRepository.GetInvalidityById(client.Invalidity.Id) : null;
             
             var createdClient = await _unitOfWork.ClientRepository.CreateClient(client);
             

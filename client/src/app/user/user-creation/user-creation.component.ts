@@ -22,10 +22,14 @@ export class UserCreationComponent implements OnInit {
   countries: Country[];
   invalidities: Invalidity[];
 
-  passportNumberPattern = new RegExp("^[0-9]{7}");
-  cellPhonePattern = new RegExp("^\\+375[1-9]{2}\s?[1-9]\d{2}-?\d{2}-?\d{2}");
-  homePhonePattern = new RegExp("^[1-9]\d{2}-?\d{2}-?\d{2}");
-  identifyNumberPattern = new RegExp("^[1-6][0-3]\d[0-1][1-9]\d{2}[ABCHKEM]\d{3}(PB|BA|BI)\d");
+  passportNumberPattern = new RegExp("^\\d{7}$");
+  cellPhonePattern = new RegExp('^\\+375[1-9]{2}\\s?[1-9]\\d{2}-?\\d{2}-?\\d{2}$');
+  homePhonePattern = new RegExp("^[1-9]\\d{2}-?\\d{2}-?\\d{2}$");
+  identifyNumberPattern = new RegExp("^\\d{7}A\\d{3}PB\\d$");
+
+  identifyNumberTip = "Структура: <7 цифр>A<номер последовательности><контрольная цифра>"
+  cellPhoneTip = "Структура: +375<код оператора><номер телефона>"
+  passportNumberTip = "Номер паспорта должен состоять из 7 цифр"
 
   constructor(private userService: UserService,
     private formBuilder: FormBuilder, 
@@ -47,18 +51,18 @@ export class UserCreationComponent implements OnInit {
       issuedBy: ["", [Validators.required]],
       issuedDate: [Date, Validators.required],
       identifyNumber: ["", [Validators.required, Validators.pattern(this.identifyNumberPattern)]],
-      cityOfResidence: ["", [Validators.required]],
+      cityOfResidence: [, [Validators.required]],
       addressOfResidence: ["", Validators.required],
       homePhone: ["", Validators.pattern(this.homePhonePattern)],
       cellPhone: ["", Validators.pattern(this.cellPhonePattern)],
       email: ["", Validators.email],
       placeOfWork: [""],
       position: [""],
-      livingCity: ["", [Validators.required]],
+      livingCity: [, [Validators.required]],
       livingAddress: ["", [Validators.required]],
-      familyPosition: ["", [Validators.required]],
-      citizen: ["", [Validators.required]],
-      invalidity: ["", [Validators.required]],
+      familyPosition: [, [Validators.required]],
+      citizen: [, [Validators.required]],
+      invalidity: [, [Validators.required]],
       retired: [false, [Validators.required]],
       monthlyIncome: [""],
       military: [false],
@@ -66,11 +70,11 @@ export class UserCreationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
     this.loadCities();
     this.loadFamilyPositions();
     this.loadCountries();
     this.loadInvalidityTypes();
+    this.initForm();
   }
 
   loadCities() {
@@ -98,7 +102,22 @@ export class UserCreationComponent implements OnInit {
   }
 
   createClient() {
-    //console.log(this.userForm);
+    let cityOfResidence = this.cities.find(city => city?.id == this.userForm.controls["cityOfResidence"].value);
+    this.userForm.controls["cityOfResidence"].setValue(cityOfResidence);
+
+    let livingCity = this.cities.find(city => city?.id == this.userForm.controls["livingCity"].value);
+    this.userForm.controls["livingCity"].setValue(livingCity);
+
+    let citizen = this.countries.find(citizen => citizen?.id == this.userForm.controls["citizen"].value);
+    this.userForm.controls["citizen"].setValue(citizen);
+
+    let familyPosition = this.familyPositions.find(familyPos => familyPos?.id == this.userForm.controls["familyPosition"].value);
+    this.userForm.controls["familyPosition"].setValue(familyPosition);
+
+    let invalidity = this.invalidities.find(invalid => invalid?.id == this.userForm.controls["invalidity"].value);
+    this.userForm.controls["invalidity"].setValue(invalidity);
+
+    console.log(this.userForm.value);
     this.userService.createUser(this.userForm.value).subscribe((data) => {
       console.log(data);
     });

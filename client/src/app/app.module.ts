@@ -13,6 +13,7 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { UserCreationComponent } from './user/user-creation/user-creation.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NavComponent,
     FooterComponent,
     UserListComponent,
-    UserCreationComponent
+    UserCreationComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,11 @@
+<div class="mb-3 form-group">
+    <label>{{label}}</label>
+    <input [class.is-invalid]="ngControl?.touched && ngControl?.invalid" [formControl]="$any(ngControl).control"
+        class="form-control mr-sm-2" type={{type}} tooltip={{tip}} placement="top">
+
+    <div *ngIf="ngControl?.control?.errors?.required" class="invalid-feedback">Пожалуйста, заполните поле "{{label.toLowerCase()}}"</div>
+    <div *ngIf="ngControl?.control?.errors?.pattern" class="invalid-feedback">Неверное значение</div>
+    <div *ngIf="ngControl?.control?.errors?.minlength" class="invalid-feedback">{{label}} должен быть длиной минимум
+        {{ngControl?.control?.errors?.minlength['requiredLength']}}</div>
+    <div *ngIf="ngControl?.control?.errors?.isMatching" class="invalid-feedback">Пароли не совпадают</div>
+</div>

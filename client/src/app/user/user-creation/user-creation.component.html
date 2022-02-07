@@ -1,19 +1,11 @@
 <h3>Регистрация нового пользователя</h3>
 <form [formGroup]="userForm" (ngSubmit)="createClient()" autocomplete="off">
-    <div class="mb-3 form-group">
-        <label>Имя</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["name"]'>
-    </div>
 
-    <div class="mb-3 form-group">
-        <label>Фамилия</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["surname"]'>
-    </div>
+    <app-text-input [label]='"Имя"' [formControl]='$any(userForm).controls["name"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Отчество</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["fatherName"]'>
-    </div>
+    <app-text-input [label]='"Фамилия"' [formControl]='$any(userForm).controls["surname"]'></app-text-input>
+
+    <app-text-input [label]='"Отчество"' [formControl]='$any(userForm).controls["fatherName"]'></app-text-input>
 
     <div class="mb-3 form-group">
         <label>Дата рождения</label>
@@ -28,93 +20,62 @@
         </label>
     </div>
 
-    <div class="mb-3 form-group">
-        <label>Серия паспорта</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["passportSerial"]'>
-    </div>
+    <app-text-input [label]='"Серия паспорта"' [formControl]='$any(userForm).controls["passportSerial"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Номер паспорта</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["passportNumber"]'
-        tooltip="Номер паспорта должен состоять из 7 цифр" placement="top">
-    </div>
+    <app-text-input [label]='"Номер паспорта"' tip={{passportNumberTip}}
+        [formControl]='$any(userForm).controls["passportNumber"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Кем выдан</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["issuedBy"]'>
-    </div>
+    <app-text-input [label]='"Кем выдан"' [formControl]='$any(userForm).controls["issuedBy"]'></app-text-input>
 
     <div class="mb-3 form-group">
         <label>Дата выдачи</label>
         <input class="form-control" type="date" [formControl]='$any(userForm).controls["issuedDate"]'>
     </div>
 
-    <div class="mb-3 form-group">
-        <label>Идентификационный номер</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["identifyNumber"]'>
-    </div>
+    <app-text-input [label]='"Идентификационный номер"' [formControl]='$any(userForm).controls["identifyNumber"]'
+        tip='{{identifyNumberTip}}'></app-text-input>
 
     <div class="form-group">
         <label class="form-label">Город прописки</label>
         <div class="input-group mb-3" style="background: none; box-shadow: none">
             <select class="form-select" name="cityOfResidence" aria-describedby=""
                 [formControl]='$any(userForm).controls["cityOfResidence"]'>
-                <option *ngFor="let city of cities" value="{{city?.name}}">{{city?.name | titlecase}}</option>
+                <option *ngFor="let city of cities" value={{city.id}}>{{city?.name | titlecase}}</option>
             </select>
         </div>
     </div>
 
-    <div class="mb-3 form-group">
-        <label>Адрес прописки</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["addressOfResidence"]'>
-    </div>
+    <app-text-input [label]='"Адрес прописки"' [formControl]='$any(userForm).controls["addressOfResidence"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Домашний телефон</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["homePhone"]'>
-    </div>
+    <app-text-input [label]='"Домашний телефон"' [formControl]='$any(userForm).controls["homePhone"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Мобильный телефон</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["cellPhone"]'>
-    </div>
+    <app-text-input [label]='"Мобильный телефон"' [formControl]='$any(userForm).controls["cellPhone"]'
+    tip={{cellPhoneTip}}></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Email</label>
-        <input class="form-control" type="email" [formControl]='$any(userForm).controls["email"]'>
-    </div>
+    <app-text-input [label]='"Email"' [type]='"email"' [formControl]='$any(userForm).controls["email"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Место работы</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["placeOfWork"]'>
-    </div>
+    <app-text-input [label]='"Место работы"' [type]='"email"' [formControl]='$any(userForm).controls["placeOfWork"]'></app-text-input>
 
-    <div class="mb-3 form-group">
-        <label>Должность</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["position"]'>
-    </div>
+    <app-text-input [label]='"Должность"' [formControl]='$any(userForm).controls["position"]'></app-text-input>
 
     <div class="form-group">
         <label class="form-label">Город проживания</label>
         <div class="input-group mb-3" style="background: none; box-shadow: none">
             <select class="form-select" name="livingCity" aria-describedby=""
                 [formControl]='$any(userForm).controls["livingCity"]'>
-                <option *ngFor="let city of cities" value="{{city?.name}}">{{city?.name | titlecase}}</option>
+                <option *ngFor="let city of cities" value={{city.id}}>{{city?.name | titlecase}}</option>
             </select>
         </div>
     </div>
 
-    <div class="mb-3 form-group">
-        <label>Адрес проживания</label>
-        <input class="form-control" type="text" [formControl]='$any(userForm).controls["livingAddress"]'>
-    </div>
+    <app-text-input [label]='"Адрес проживания"' [formControl]='$any(userForm).controls["livingAddress"]'></app-text-input>
 
     <div class="form-group">
         <label class="form-label">Семейное положение</label>
         <div class="input-group mb-3" style="background: none; box-shadow: none">
             <select class="form-select" name="familyPosition" aria-describedby=""
                 [formControl]='$any(userForm).controls["familyPosition"]'>
-                <option *ngFor="let position of familyPositions" value="{{position?.name}}">{{position?.name | titlecase}}</option>
+                <option *ngFor="let position of familyPositions" value={{position.id}}>{{position?.name | titlecase}}</option>
             </select>
         </div>
     </div>
@@ -124,7 +85,7 @@
         <div class="input-group mb-3" style="background: none; box-shadow: none">
             <select class="form-select" name="citizen" aria-describedby=""
                 [formControl]='$any(userForm).controls["citizen"]'>
-                <option *ngFor="let country of countries" value="{{country?.name}}">{{country?.name | titlecase}}</option>
+                <option *ngFor="let country of countries" value={{country.id}}>{{country?.name | titlecase}}</option>
             </select>
         </div>
     </div>
@@ -134,7 +95,7 @@
         <div class="input-group mb-3" style="background: none; box-shadow: none">
             <select class="form-select" name="invalidity" aria-describedby=""
                 [formControl]='$any(userForm).controls["invalidity"]'>
-                <option *ngFor="let invalidity of invalidities" value="{{invalidity?.name}}">{{invalidity?.name | titlecase}}</option>
+                <option *ngFor="let invalidity of invalidities" value={{invalidity.id}}>{{invalidity?.name | titlecase}}</option>
             </select>
         </div>
     </div>
@@ -147,10 +108,7 @@
         </label>
     </div>
 
-    <div class="mb-3 form-group">
-        <label>Ежемесячный доход</label>
-        <input class="form-control" type="number" [formControl]='$any(userForm).controls["monthlyIncome"]'>
-    </div>
+    <app-text-input [label]='"Ежемесячная зарплата"' [type]='"number"' [formControl]='$any(userForm).controls["monthlyIncome"]'></app-text-input>
 
     <div class="mb-3 form-check form-group">
         <input [formControl]='$any(userForm).controls["military"]' class="form-control form-check-input"

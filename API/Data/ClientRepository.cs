@@ -30,7 +30,10 @@ namespace API.Data
 
         public async Task<Client> GetClientByIdAsync(int id)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == id);
+            var client = await _context.Clients
+                .Include(x => x.CityOfResidence).Include(x => x.LivingCity)
+                .Include(x => x.FamilyPosition).Include(x => x.Citizen)
+                .Include(x => x.Invalidity).FirstOrDefaultAsync(x => x.Id == id);
             return client;
         }
 

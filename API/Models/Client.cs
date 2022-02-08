@@ -49,7 +49,8 @@ namespace API.Models
 
         [Required(ErrorMessage = "Identify number is required")]
         [MaxLength(80, ErrorMessage = "Identify number should contain less than 80 characters")]
-        [RegularExpression(@"^[1-6][0-3]\d[0-1][1-9]\d{2}[ABCHKEM]\d{3}(PB|BA|BI)\d", ErrorMessage = "Incorrect identify number")]
+        //[RegularExpression(@"^[1-6][0-3]\d[0-1][1-9]\d{2}[ABCHKEM]\d{3}(PB|BA|BI)\d", ErrorMessage = "Incorrect identify number")]
+        [RegularExpression(@"^\d{7}A\d{3}PB\d", ErrorMessage = "Incorrect identify number")]
         public string IdentifyNumber { get; set; }
 
         public City CityOfResidence { get; set; }
@@ -63,11 +64,12 @@ namespace API.Models
         public string HomePhone { get; set; }
 
         [MaxLength(80, ErrorMessage = "Cell phone should contain less than 80 characters")]
-        [RegularExpression(@"^\\+375[1-9]{2}\s?[1-9]\d{2}-?\d{2}-?\d{2}", ErrorMessage = "Incorrect Cell phone number")]
+        [RegularExpression(@"^\+375[1-9]{2}\s?[1-9]\d{2}-?\d{2}-?\d{2}$", ErrorMessage = "Incorrect Cell phone number")]
         public string CellPhone { get; set; }
 
         [MaxLength(80, ErrorMessage = "Email should contain less than 80 characters")]
-        [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Incorrect email")]
+        [EmailAddress(ErrorMessage = "Incorrect email")]
+        //[RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Incorrect email")]
         public string Email { get; set; }
 
         [MaxLength(80, ErrorMessage = "Place of work should contain less than 80 characters")]

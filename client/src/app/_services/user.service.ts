@@ -19,6 +19,10 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl + 'clients');
   }
 
+  getUser(id: string) {
+    return this.http.get<User>(this.baseUrl + 'clients/' + id);
+  }
+
   updateUser(user: User) {
     return this.http.put<User>(this.baseUrl + 'clients', user);
   }

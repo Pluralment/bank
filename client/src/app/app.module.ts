@@ -14,6 +14,7 @@ import { UserCreationComponent } from './user/user-creation/user-creation.compon
 import { ToastrModule } from 'ngx-toastr';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     FooterComponent,
     UserListComponent,
     UserCreationComponent,
-    TextInputComponent
+    TextInputComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

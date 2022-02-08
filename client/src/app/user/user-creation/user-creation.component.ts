@@ -36,8 +36,7 @@ export class UserCreationComponent implements OnInit {
     private cityService: CityService,
     private familyPositionService: FamilyPositionService,
     private countryService: CountryService,
-    private invalidityService: InvalidityService) { 
-  }
+    private invalidityService: InvalidityService) { }
 
   initForm() {
     this.userForm = this.formBuilder.group({
@@ -64,7 +63,7 @@ export class UserCreationComponent implements OnInit {
       citizen: [, [Validators.required]],
       invalidity: [, [Validators.required]],
       retired: [false, [Validators.required]],
-      monthlyIncome: [""],
+      monthlyIncome: [0],
       military: [false],
     });
   }

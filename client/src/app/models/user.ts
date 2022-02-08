@@ -1,3 +1,8 @@
+import { City } from "./city";
+import { Country } from "./country";
+import { FamilyPosition } from "./familyPosition";
+import { Invalidity } from "./invalidity";
+
 export interface User {
     id: number,
     surname: string,
@@ -10,18 +15,18 @@ export interface User {
     issuedBy: string,
     issuedDate: Date,
     identifyNumber: string,
-    cityOfResidence: string,
+    cityOfResidence: City,
     addressOfResidence: string,
     homePhone: string,
     cellPhone: string,
     email: string,
     placeOfWork: string,
     position: string,
-    livingCity: string,
+    livingCity: City,
     livingAddress: string,
-    familyPosition: string,
-    citizen: string,
-    invalidity: string,
+    familyPosition: FamilyPosition,
+    citizen: Country,
+    invalidity: Invalidity,
     retired: boolean,
     monthlyIncome: number,
     military: boolean

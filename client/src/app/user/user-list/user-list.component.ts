@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -10,7 +11,8 @@ import { UserService } from 'src/app/_services/user.service';
 export class UserListComponent implements OnInit {
   users: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -25,9 +27,12 @@ export class UserListComponent implements OnInit {
 
   deleteUser(userId: number) {
     this.userService.deleteUser(userId).subscribe(() => {
-      this.users = this.users.filter((element, index, array) => { 
+      let userName: string = "";
+      this.users = this.users.filter((element, index, array) => {
+        if (element.id == userId) userName = element.name;
         return (element.id !== userId); 
       });
+      this.toastr.info(userName + " удален");
     });
   }
 

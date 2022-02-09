@@ -76,8 +76,8 @@ export class UserEditComponent implements OnInit {
     this.userForm.controls["invalidity"].setValue(invalidity);
 
     this.userService.updateUser(this.userForm.value).subscribe({
-      next: () => this.toastr.success("User is updated"),
-      error: (e) => this.toastr.error(e)
+      next: () => this.toastr.success("Пользователь обновлён"),
+      error: (e) => this.toastr.error("Введены некорректные данные")
     });
   }
 

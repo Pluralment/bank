@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { City } from 'src/app/models/city';
 import { Country } from 'src/app/models/country';
 import { FamilyPosition } from 'src/app/models/familyPosition';
@@ -36,7 +37,8 @@ export class UserCreationComponent implements OnInit {
     private cityService: CityService,
     private familyPositionService: FamilyPositionService,
     private countryService: CountryService,
-    private invalidityService: InvalidityService) { }
+    private invalidityService: InvalidityService,
+    private toastr: ToastrService) { }
 
   initForm() {
     this.userForm = this.formBuilder.group({
@@ -54,7 +56,7 @@ export class UserCreationComponent implements OnInit {
       addressOfResidence: ["", Validators.required],
       homePhone: ["", Validators.pattern(this.homePhonePattern)],
       cellPhone: ["", Validators.pattern(this.cellPhonePattern)],
-      email: ["", Validators.email],
+      email: ["", [Validators.email, Validators.required]],
       placeOfWork: [""],
       position: [""],
       livingCity: [, [Validators.required]],
@@ -117,8 +119,9 @@ export class UserCreationComponent implements OnInit {
     this.userForm.controls["invalidity"].setValue(invalidity);
 
     console.log(this.userForm.value);
-    this.userService.createUser(this.userForm.value).subscribe((data) => {
-      console.log(data);
+    this.userService.createUser(this.userForm.value).subscribe({
+      next: () => this.toastr.success("Successfully created"),
+      error: (e) => this.toastr.error("Error occurred"),
     });
   }
 

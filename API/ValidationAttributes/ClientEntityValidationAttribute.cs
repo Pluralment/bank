@@ -21,13 +21,13 @@ namespace API.ValidationAttributes
             var dbContext = validationContext.GetService(typeof(DataContext)) as DataContext;
             var client = value as Client;
 
-            if (dbContext.Clients.Any(x => x.PassportNumber == client.PassportNumber
+            if (dbContext.Clients.Where(x => x.Id != client.Id).Any(x => x.PassportNumber == client.PassportNumber
                                         && x.PassportSerial == client.PassportSerial))
             {
                 return new ValidationResult("User with same PasswordSerial, PasswordNumber exists");
             }
 
-            if (dbContext.Clients.Any(x => x.IdentifyNumber == client.IdentifyNumber))
+            if (dbContext.Clients.Where(x => x.Id != client.Id).Any(x => x.IdentifyNumber == client.IdentifyNumber))
             {
                 return new ValidationResult("User with same IdentifyNumber exists");
             }

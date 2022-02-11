@@ -44,7 +44,7 @@ namespace API.Data
 
         public void Update(Client client)
         {
-            _context.Clients.Update(client);
+            _context.Entry(client).State = EntityState.Modified;
         }
     }
 }

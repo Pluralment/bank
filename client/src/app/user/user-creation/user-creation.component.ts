@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { City } from 'src/app/models/city';
 import { Country } from 'src/app/models/country';
@@ -38,7 +39,8 @@ export class UserCreationComponent implements OnInit {
     private familyPositionService: FamilyPositionService,
     private countryService: CountryService,
     private invalidityService: InvalidityService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private router: Router) { }
 
   initForm() {
     this.userForm = this.formBuilder.group({
@@ -120,7 +122,10 @@ export class UserCreationComponent implements OnInit {
 
     console.log(this.userForm.value);
     this.userService.createUser(this.userForm.value).subscribe({
-      next: () => this.toastr.success("Successfully created"),
+      next: () => {
+        this.toastr.success("Successfully created");
+        this.router.navigateByUrl('/users');
+      },
       error: (e) => this.toastr.error("Error occurred"),
     });
   }

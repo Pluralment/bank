@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { City } from 'src/app/models/city';
 import { Country } from 'src/app/models/country';
 import { FamilyPosition } from 'src/app/models/familyPosition';
@@ -75,10 +76,32 @@ export class UserEditComponent implements OnInit {
     let invalidity = this.invalidities.find(invalid => invalid?.id == this.userForm.controls["invalidity"].value);
     this.userForm.controls["invalidity"].setValue(invalidity);
 
+    let user: Partial<User> = {
+      cityOfResidence: cityOfResidence,
+      livingCity: livingCity,
+      citizen: citizen,
+      familyPosition: familyPosition,
+      invalidity: invalidity
+    };
+
     this.userService.updateUser(this.userForm.value).subscribe({
-      next: () => this.toastr.success("Пользователь обновлён"),
-      error: (e) => this.toastr.error("Введены некорректные данные")
+      next: () => {
+        this.toastr.success("Пользователь обновлён");
+      },
+      error: (e) => {
+        this.toastr.error("Введены некорректные данные");
+        console.log(e);
+      }
     });
+    this.setFormFields(user);
+  }
+
+  setFormFields(user: Partial<User>) {
+    this.userForm.controls["cityOfResidence"].setValue(user.cityOfResidence.id);
+    this.userForm.controls["livingCity"].setValue(user.livingCity.id);
+    this.userForm.controls["citizen"].setValue(user.citizen.id);
+    this.userForm.controls["familyPosition"].setValue(user.familyPosition.id);
+    this.userForm.controls["invalidity"].setValue(user.invalidity.id);
   }
 
   initForm() {

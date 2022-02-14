@@ -13,7 +13,7 @@ namespace API.Interfaces
         IFamilyPositionRepository FamilyPositionRepository { get; }
         ICountryRepository CountryRepository { get; }
         IInvalidityRepository InvalidityRepository { get; }
-
+        IDepositRepository DepositRepository { get; }
         Task<bool> Complete();
 
         bool HasChanges();

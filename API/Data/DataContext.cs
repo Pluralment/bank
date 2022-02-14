@@ -14,6 +14,11 @@ namespace API.Data
         public DbSet<FamilyPosition> FamilyPositions { get; set; }
         public DbSet<Invalidity> Invalidities { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Deposit> Deposits { get; set; }
+        public DbSet<Management> Managements { get; set; }
+        public DbSet<DepositType> DepositTypes { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {

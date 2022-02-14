@@ -25,6 +25,8 @@ namespace API.Data
 
         public IInvalidityRepository InvalidityRepository => new InvalidityRepository(_context);
 
+        public IDepositRepository DepositRepository => new DepositRepository(_context);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

@@ -18,11 +18,20 @@ namespace API.Data
 
         public async Task<DepositContract> GetDepositById(int id)
         {
-            var deposit = await _context.DepositContracts
+            return await _context.DepositContracts
                 .Include(x => x.Currency)
                 .Include(x => x.DepositType)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            return deposit;
+        }
+
+        public async Task<Currency> GetCurrencyById(int id)
+        {
+            return await _context.Currencies.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<DepositType> GetDepositTypeById(int id)
+        {
+            return await _context.DepositTypes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<DepositContract> CreateDeposit(DepositContract deposit)

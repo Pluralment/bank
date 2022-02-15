@@ -14,6 +14,8 @@ namespace API.Interfaces
 
         Task<DepositContract> GetDepositById(int id);
 
+        Task<Currency> GetCurrencyById(int id);
 
+        Task<DepositType> GetDepositTypeById(int id);
     }
 }

@@ -25,5 +25,8 @@ namespace API.Models
 
         [Required]
         public double MaxContribution { get; set; }
+
+        [Required]
+        public bool IsRevocable { get; set; }
     }
 }

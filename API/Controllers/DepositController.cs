@@ -29,5 +29,18 @@ namespace API.Controllers
             return BadRequest("Error while creating deposit");
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> CloseDeposit(int id)
+        {
+            var deposit = await _unitOfWork.DepositRepository.GetDepositById(id);
+            await _unitOfWork.DepositRepository.CloseDeposit(deposit);
+
+            if (await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Something went wrong");
+        }
     }
 }

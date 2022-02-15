@@ -12,5 +12,8 @@ namespace API.Interfaces
 
         Task<DepositContract> CloseDeposit(DepositContract deposit);
 
+        Task<DepositContract> GetDepositById(int id);
+
+
     }
 }

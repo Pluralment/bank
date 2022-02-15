@@ -90,5 +90,53 @@ namespace API.Data
 
             await context.SaveChangesAsync();
         }
+
+        public static async Task SeedCurrencies(DataContext context)
+        {
+            if (await context.Currencies.AnyAsync()) return;
+
+            var currenciesData = await System.IO.File.ReadAllTextAsync("Data/Seeds/CurrenciesSeedData.json");
+            var currencies = JsonSerializer.Deserialize<List<Currency>>(currenciesData);
+            if (currencies == null) return;
+
+            foreach (var currency in currencies)
+            {
+                await context.Currencies.AddAsync(currency);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedDepositTypes(DataContext context)
+        {
+            if (await context.DepositTypes.AnyAsync()) return;
+
+            var depositTypesData = await System.IO.File.ReadAllTextAsync("Data/Seeds/DepositTypesSeedData.json");
+            var depositTypes = JsonSerializer.Deserialize<List<DepositType>>(depositTypesData);
+            if (depositTypes == null) return;
+
+            foreach (var depositType in depositTypes)
+            {
+                await context.DepositTypes.AddAsync(depositType);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedAccountingRecordTypes(DataContext context)
+        {
+            if (await context.AccountingRecordTypes.AnyAsync()) return;
+
+            var accountingRecordTypesData = await System.IO.File.ReadAllTextAsync("Data/Seeds/AccountingRecordTypesSeedData.json");
+            var accountingRecordTypes = JsonSerializer.Deserialize<List<AccountingRecordType>>(accountingRecordTypesData);
+            if (accountingRecordTypes == null) return;
+
+            foreach (var accountingRecordType in accountingRecordTypes)
+            {
+                await context.AccountingRecordTypes.AddAsync(accountingRecordType);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

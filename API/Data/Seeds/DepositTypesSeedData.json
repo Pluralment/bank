@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Отзывный вклад",
+        "IsRevocable": true,
+        "Interest": 5.6,
+        "IsFixedInterest": true,
+        "MinContribution": 100.0,
+        "MaxContribution": 1000000.0
+    },
+    {
+        "Name": "Срочный безотзывный вклад",
+        "IsRevocable": false,
+        "Interest": 15.0,
+        "IsFixedInterest": true,
+        "MinContribution": 100.0,
+        "MaxContribution": 1000000.0
+    }
+]

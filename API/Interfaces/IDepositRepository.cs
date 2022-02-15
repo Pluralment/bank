@@ -8,9 +8,9 @@ namespace API.Interfaces
 {
     public interface IDepositRepository
     {
-        Task<Deposit> CreateDeposit(Deposit deposit);
+        Task<DepositContract> CreateDeposit(DepositContract deposit);
 
-        Task<Deposit> CloseDeposit(Deposit deposit);
+        Task<DepositContract> CloseDeposit(DepositContract deposit);
 
     }
 }

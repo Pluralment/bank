@@ -4,14 +4,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220215112727_Fix-Tables-For-Deposit")]
+    partial class FixTablesForDeposit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace API.Migrations
 
                     b.HasIndex("ToId");
 
-                    b.ToTable("AccountingEntries");
+                    b.ToTable("Managements");
                 });
 
             modelBuilder.Entity("API.Models.AccountingRecord", b =>
@@ -61,7 +63,7 @@ namespace API.Migrations
 
                     b.HasIndex("RecordTypeId");
 
-                    b.ToTable("AccountingRecords");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("API.Models.AccountingRecordType", b =>
@@ -84,7 +86,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountingRecordTypes");
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("API.Models.City", b =>
@@ -295,7 +297,7 @@ namespace API.Migrations
 
                     b.HasIndex("DepositTypeId");
 
-                    b.ToTable("DepositContracts");
+                    b.ToTable("Deposits");
                 });
 
             modelBuilder.Entity("API.Models.DepositType", b =>

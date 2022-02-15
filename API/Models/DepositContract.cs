@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class Deposit
+    public class DepositContract
     {
         [Key]
         public int Id { get; set; }
-        
+
         [Required]
-        public Client Client { get; set; }
+        public string Number { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -21,22 +21,15 @@ namespace API.Models
         public DateTime EndDate { get; set; }
 
         [Required]
-        public DateTime ContractExpiry { get; set; }
-
-        // Отзывный или безотзывный
-        [Required]
-        public DepositType Type { get; set; }
+        public Currency Currency { get; set; }
 
         [Required]
-        public string ContractNumber { get; set; }
+        public int Duration { get; set; }
 
         [Required]
-        public string Currency { get; set; }
+        public double Amount { get; set; }
 
         [Required]
-        public double Sum { get; set; }
-
-        [Required]
-        public double Percentage { get; set; }
+        public DepositType DepositType { get; set; }
     }
 }

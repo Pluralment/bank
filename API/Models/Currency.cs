@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class Account
+    public class Currency
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public Plan Plan { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string Number { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
-        [Required]
-        public string ContractNumber { get; set; }
+        public double Ratio { get; set; }
     }
 }

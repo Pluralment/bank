@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class Plan
+    public class AccountingEntry
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public int Code { get; set; }
+        public DateTime DateTime { get; set; }
+        
+        public AccountingRecord From { get; set; }        
+        public AccountingRecord To { get; set; }
 
         [Required]
-        public bool Active { get; set; }
-
-        public string Description { get; set; }
+        public double Amount { get; set; }
     }
 }

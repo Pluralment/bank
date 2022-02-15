@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Deposit>> CreateDeposit(Deposit deposit)
+        public async Task<ActionResult<DepositContract>> CreateDeposit(DepositContract deposit)
         {
             var createdDeposit = await _unitOfWork.DepositRepository.CreateDeposit(deposit);
 

@@ -13,5 +13,8 @@ namespace API.Models
 
         [Required]
         public AccountingRecordType RecordType { get; set; }
+
+        public List<DepositRecord> DepositRecords { get; set; }
+
     }
 }

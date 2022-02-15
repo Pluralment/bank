@@ -9,10 +9,10 @@ namespace API.Models
 {
     public class DepositRecord
     {
-        [Key, Column(Order = 0)]
+        public int DepositContractId { get; set; }
         public DepositContract DepositContract { get; set; }
-
-        [Key, Column(Order = 1)]
+        
+        public int RecordId { get; set; }
         public AccountingRecord Record { get; set; }
     }
 }

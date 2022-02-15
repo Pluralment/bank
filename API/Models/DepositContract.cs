@@ -31,5 +31,7 @@ namespace API.Models
 
         [Required]
         public DepositType DepositType { get; set; }
+
+        public List<DepositRecord> DepositRecords { get; set; }
     }
 }

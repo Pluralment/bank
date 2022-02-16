@@ -141,11 +141,13 @@ namespace API.Data
 
         public static async Task SeedAccountingRecords(DataContext context)
         {
+            if (await context.AccountingRecords.AnyAsync()) return;
             var cashBox = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "1010");
             var bankFund = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "7327");
 
-            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox, Number = "5623496", Name = " ‡ÒÒ‡" });
-            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund, Number = "7964852", Name = "‘ÓÌ‰ ·‡ÌÍ‡" });
+            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox, Number = "5623496", Name = "–ö–∞—Å—Å–∞" });
+            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund, Number = "7964852", Name = "–§–æ–Ω–¥ —Ä–∞–∑–≤–∏—Ç–∏—è –±–∞–Ω–∫–∞" });
+            await context.SaveChangesAsync();
         }
     }
 }

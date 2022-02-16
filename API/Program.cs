@@ -31,6 +31,7 @@ namespace API
                 await Seed.SeedCurrencies(context);
                 await Seed.SeedDepositTypes(context);
                 await Seed.SeedAccountingRecordTypes(context);
+                await Seed.SeedAccountingRecords(context);
             }
             catch (Exception ex)
             {

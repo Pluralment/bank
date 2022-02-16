@@ -27,6 +27,7 @@ namespace API.Controllers
 
             if (await _unitOfWork.Complete())
             {
+                createdDeposit.DepositRecords = new List<DepositRecord>();
                 return Ok(createdDeposit);
             }
 

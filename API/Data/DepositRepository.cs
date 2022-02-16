@@ -42,12 +42,16 @@ namespace API.Data
             // открытие счетов (2)
             var mainAccount = new AccountingRecord()
             {
-                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 1)
+                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 1),
+                Name = $"{deposit.Client.Name} {deposit.Client.Surname}: текущий",
+                Number = Guid.NewGuid().ToString()
             };
 
             var percentAccount = new AccountingRecord()
             {
-                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 2)
+                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 2),
+                Name = $"{deposit.Client.Name} {deposit.Client.Surname}: процентный",
+                Number = Guid.NewGuid().ToString()
             };
 
             mainAccount = (await _context.AccountingRecords.AddAsync(mainAccount)).Entity;

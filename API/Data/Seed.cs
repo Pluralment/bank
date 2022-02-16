@@ -144,8 +144,8 @@ namespace API.Data
             var cashBox = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "1010");
             var bankFund = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "7327");
 
-            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox });
-            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund });
+            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox, Number = "5623496", Name = "Касса" });
+            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund, Number = "7964852", Name = "Фонд банка" });
         }
     }
 }

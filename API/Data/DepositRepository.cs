@@ -161,7 +161,7 @@ namespace API.Data
 
         public async Task<IEnumerable<AccountReport>> GetAccountsReport()
         {
-            return await _context.AccountsReport.FromSqlRaw($"AccountsReport").ToListAsync();
+            return await _context.AccountsReport.FromSqlRaw($"GetAccountsReport").ToListAsync();
         }
     }
 }

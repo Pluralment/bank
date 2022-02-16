@@ -42,14 +42,14 @@ namespace API.Data
             // открытие счетов (2)
             var mainAccount = new AccountingRecord()
             {
-                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 1),
+                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Number == "3014"),
                 Name = $"{deposit.Client.Name} {deposit.Client.Surname}: текущий",
                 Number = Guid.NewGuid().ToString()
             };
 
             var percentAccount = new AccountingRecord()
             {
-                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Id == 2),
+                RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Number == "2400"),
                 Name = $"{deposit.Client.Name} {deposit.Client.Surname}: процентный",
                 Number = Guid.NewGuid().ToString()
             };
@@ -69,8 +69,8 @@ namespace API.Data
             });
 
             // Оборот
-            var cash = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Id == 3);
-            var bank = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Id == 4);
+            var cash = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "1010");
+            var bank = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "7327");
 
             await _context.AccountingEntries.AddAsync(new AccountingEntry()
             {
@@ -102,15 +102,15 @@ namespace API.Data
             var mainAccount = await _context.AccountingRecords.Include(x => x.RecordType)
                 .FirstOrDefaultAsync(x => x.Id == 
                     _context.DepositRecords.Include(x => x.DepositContract).Include(x => x.Record)
-                    .FirstOrDefault(x => x.DepositContract == deposit && x.Record.RecordType.Id == 1).Record.Id);
+                    .FirstOrDefault(x => x.DepositContract == deposit && x.Record.RecordType.Number == "3014").Record.Id);
 
             var percentAccount = await _context.AccountingRecords.Include(x => x.RecordType)
                 .FirstOrDefaultAsync(x => x.Id ==
                     _context.DepositRecords.Include(x => x.DepositContract).Include(x => x.Record)
-                    .FirstOrDefault(x => x.DepositContract == deposit && x.Record.RecordType.Id == 2).Record.Id);
+                    .FirstOrDefault(x => x.DepositContract == deposit && x.Record.RecordType.Number == "2400").Record.Id);
 
-            var cash = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Id == 3);
-            var bank = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Id == 4);
+            var cash = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "1010");
+            var bank = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "7327");
 
 
 

@@ -35,6 +35,6 @@ namespace API.Models
         [Required]
         public Client Client { get; set; }
 
-        public List<DepositRecord> DepositRecords { get; set; }
+        public List<DepositRecord> DepositRecords { get; set; } = new List<DepositRecord>();
     }
 }

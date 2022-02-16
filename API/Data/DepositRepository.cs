@@ -158,5 +158,10 @@ namespace API.Data
 
             return _context.DepositContracts.FirstOrDefault(x => x.Id == deposit.Id);
         }
+
+        public async Task<IEnumerable<AccountReport>> GetAccountsReport()
+        {
+            return await _context.AccountsReport.FromSqlRaw($"AccountsReport").ToListAsync();
+        }
     }
 }

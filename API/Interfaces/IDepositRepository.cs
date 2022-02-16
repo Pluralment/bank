@@ -17,5 +17,7 @@ namespace API.Interfaces
         Task<Currency> GetCurrencyById(int id);
 
         Task<DepositType> GetDepositTypeById(int id);
+
+        Task<IEnumerable<AccountReport>> GetAccountsReport();
     }
 }

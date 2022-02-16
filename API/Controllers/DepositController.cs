@@ -47,5 +47,13 @@ namespace API.Controllers
 
             return BadRequest("Something went wrong");
         }
+
+
+        [HttpGet("AccountsReport")]
+        public async Task<ActionResult<IEnumerable<AccountReport>>> AccountsReport()
+        {
+            var result = await _unitOfWork.DepositRepository.GetAccountsReport();
+            return Ok(result);
+        }
     }
 }

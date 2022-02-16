@@ -22,6 +22,8 @@ namespace API.Data
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<DepositRecord> DepositRecords { get; set; }
 
+        public DbSet<AccountReport> AccountsReport { get; set; }
+
         public DataContext(DbContextOptions options) : base(options)
         {
         }
@@ -40,6 +42,9 @@ namespace API.Data
                 .HasOne(x => x.Record)
                 .WithMany(x => x.DepositRecords)
                 .HasForeignKey(x => x.RecordId);
+
+            builder.Entity<AccountReport>()
+                .HasNoKey();
         }
     }
 }

@@ -55,5 +55,12 @@ namespace API.Controllers
             var result = await _unitOfWork.DepositRepository.GetAccountsReport();
             return Ok(result);
         }
+
+        [HttpGet("EntriesReport")]
+        public async Task<ActionResult<IEnumerable<EntryReport>>> EntriesReport()
+        {
+            var result = await _unitOfWork.DepositRepository.GetEntriesReport();
+            return Ok(result);
+        }
     }
 }

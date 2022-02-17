@@ -167,5 +167,10 @@ namespace API.Data
         {
             return await _context.AccountsReport.FromSqlRaw($"GetAccountsReport").ToListAsync();
         }
+
+        public async Task<IEnumerable<EntryReport>> GetEntriesReport()
+        {
+            return await _context.EntriesReport.FromSqlRaw($"GetEntries").ToListAsync();
+        }
     }
 }

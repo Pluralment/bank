@@ -69,7 +69,7 @@ namespace API.Models
 
         [MaxLength(80, ErrorMessage = "Email should contain less than 80 characters")]
         [EmailAddress(ErrorMessage = "Incorrect email")]
-        //[RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Incorrect email")]
+        [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Incorrect email")]
         public string Email { get; set; }
 
         [MaxLength(80, ErrorMessage = "Place of work should contain less than 80 characters")]
@@ -92,7 +92,7 @@ namespace API.Models
         [Required(ErrorMessage = "Retired is required")]
         public bool Retired { get; set; }
 
-        public decimal MonthlyIncome { get; set; }
+        public double MonthlyIncome { get; set; }
         
         [Required(ErrorMessage = "Military is required")]
         public bool Military { get; set; }

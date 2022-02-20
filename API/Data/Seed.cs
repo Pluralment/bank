@@ -172,9 +172,14 @@ namespace API.Data
                 return;
             }
 
+            var bank = await context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "7327");
+
             await context.AccountingEntries.AddAsync(new AccountingEntry()
             {
-                DateTime = context.BankDateTime.FirstOrDefault().DateTime
+                DateTime = context.BankDateTime.FirstOrDefault().DateTime,
+                Amount = 100000,
+                From = null,
+                To = bank
             });
 
             await context.SaveChangesAsync();

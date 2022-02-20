@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220214135104_Add-Tables-For-Deposit")]
-    partial class AddTablesForDeposit
+    [Migration("20220220111206_database1")]
+    partial class database1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,18 +21,92 @@ namespace API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("API.Models.Account", b =>
+            modelBuilder.Entity("API.Models.AccountReport", b =>
+                {
+                    b.Property<int>("AccountingRecord")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Credit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Debt")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
+
+                    b.ToTable("AccountsReport");
+                });
+
+            modelBuilder.Entity("API.Models.AccountingEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContractNumber")
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("FromId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ToId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("AccountingEntries");
+                });
+
+            modelBuilder.Entity("API.Models.AccountingRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("RecordTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecordTypeId");
+
+                    b.ToTable("AccountingRecords");
+                });
+
+            modelBuilder.Entity("API.Models.AccountingRecordType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -40,14 +114,24 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlanId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountingRecordTypes");
+                });
+
+            modelBuilder.Entity("API.Models.BankDateTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlanId");
-
-                    b.ToTable("Accounts");
+                    b.ToTable("BankDateTime");
                 });
 
             modelBuilder.Entity("API.Models.City", b =>
@@ -138,8 +222,8 @@ namespace API.Migrations
                     b.Property<bool>("Military")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("MonthlyIncome")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("MonthlyIncome")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -204,49 +288,81 @@ namespace API.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("API.Models.Deposit", b =>
+            modelBuilder.Entity("API.Models.Currency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Ratio")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("API.Models.DepositContract", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ContractExpiry")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ContractNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DepositTypeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Percentage")
-                        .HasColumnType("float");
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("Sum")
-                        .HasColumnType("float");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("CurrencyId");
 
-                    b.ToTable("Deposits");
+                    b.HasIndex("DepositTypeId");
+
+                    b.ToTable("DepositContracts");
+                });
+
+            modelBuilder.Entity("API.Models.DepositRecord", b =>
+                {
+                    b.Property<int>("DepositContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DepositContractId", "RecordId");
+
+                    b.HasIndex("RecordId");
+
+                    b.ToTable("DepositRecords");
                 });
 
             modelBuilder.Entity("API.Models.DepositType", b =>
@@ -256,13 +372,57 @@ namespace API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Type")
+                    b.Property<double>("Interest")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsFixedInterest")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRevocable")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("MaxContribution")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MinContribution")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("DepositTypes");
+                });
+
+            modelBuilder.Entity("API.Models.EntryReport", b =>
+                {
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FromAccountName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("FromCredit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("FromDebt")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ToAccountName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ToCredit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ToDebt")
+                        .HasColumnType("float");
+
+                    b.ToTable("EntriesReport");
                 });
 
             modelBuilder.Entity("API.Models.FamilyPosition", b =>
@@ -299,60 +459,22 @@ namespace API.Migrations
                     b.ToTable("Invalidities");
                 });
 
-            modelBuilder.Entity("API.Models.Management", b =>
+            modelBuilder.Entity("API.Models.AccountingEntry", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("FromId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Sum")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ToId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("ToId");
-
-                    b.ToTable("Managements");
-                });
-
-            modelBuilder.Entity("API.Models.Plan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Plans");
-                });
-
-            modelBuilder.Entity("API.Models.Account", b =>
-                {
-                    b.HasOne("API.Models.Plan", "Plan")
+                    b.HasOne("API.Models.AccountingRecord", "From")
                         .WithMany()
-                        .HasForeignKey("PlanId")
+                        .HasForeignKey("FromId");
+
+                    b.HasOne("API.Models.AccountingRecord", "To")
+                        .WithMany()
+                        .HasForeignKey("ToId");
+                });
+
+            modelBuilder.Entity("API.Models.AccountingRecord", b =>
+                {
+                    b.HasOne("API.Models.AccountingRecordType", "RecordType")
+                        .WithMany()
+                        .HasForeignKey("RecordTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -380,7 +502,7 @@ namespace API.Migrations
                         .HasForeignKey("LivingCityId");
                 });
 
-            modelBuilder.Entity("API.Models.Deposit", b =>
+            modelBuilder.Entity("API.Models.DepositContract", b =>
                 {
                     b.HasOne("API.Models.Client", "Client")
                         .WithMany()
@@ -388,22 +510,32 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Models.DepositType", "Type")
+                    b.HasOne("API.Models.Currency", "Currency")
                         .WithMany()
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.DepositType", "DepositType")
+                        .WithMany()
+                        .HasForeignKey("DepositTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Models.Management", b =>
+            modelBuilder.Entity("API.Models.DepositRecord", b =>
                 {
-                    b.HasOne("API.Models.Account", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
+                    b.HasOne("API.Models.DepositContract", "DepositContract")
+                        .WithMany("DepositRecords")
+                        .HasForeignKey("DepositContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("API.Models.Account", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
+                    b.HasOne("API.Models.AccountingRecord", "Record")
+                        .WithMany("DepositRecords")
+                        .HasForeignKey("RecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

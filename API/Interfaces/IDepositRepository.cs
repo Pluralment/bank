@@ -23,5 +23,8 @@ namespace API.Interfaces
         Task<IEnumerable<EntryReport>> GetEntriesReport();
 
         Task CloseBankDay();
+
+        Task DeliverSaldoToClients();
+
     }
 }

@@ -150,20 +150,21 @@ namespace API.Data
             var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
 
             // Зачислить проценты
-            await _context.DepositContracts.ForEachAsync(async contract =>
+            foreach (var contract in _context.DepositContracts.Include(x => x.DepositType).ToList())
             {
                 if (contract.IsClosed)
                 {
                     return;
                 }
 
-                var mainAccount = _context.AccountingRecords
-                    .FirstOrDefault(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014").Record);
-                var percentAccount = _context.AccountingRecords
-                    .FirstOrDefault(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400").Record);
+                var mainAccount = await _context.AccountingRecords
+                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014").Record);
+                
+                var percentAccount = await _context.AccountingRecords
+                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400").Record);
                 var interest = contract.DepositType.Interest;
 
-                if (contract.StartDate >= dateTime && contract.EndDate <= dateTime)
+                if (contract.StartDate <= dateTime && contract.EndDate >= dateTime)
                 {
                     await _context.AccountingEntries.AddAsync(new AccountingEntry()
                     {
@@ -173,7 +174,7 @@ namespace API.Data
                         To = percentAccount,
                     });
                 }
-                else
+                else if (contract.EndDate < dateTime)
                 {
                     contract.IsClosed = true;
                     await _context.AccountingEntries.AddAsync(new AccountingEntry()
@@ -184,9 +185,37 @@ namespace API.Data
                         To = mainAccount
                     });
                 }
-            });
+            }
 
             (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime = dateTime.AddDays(1);
+        }
+
+        public async Task DeliverSaldoToClients()
+        {
+            var cash = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "1010");
+            var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
+            var report = _context.AccountsReport.FromSqlRaw("GetAccountsReport").ToList();
+            foreach (var account in _context.AccountingRecords
+                .Where(x => x.RecordType.Number == "2400" || x.RecordType.Number == "3014").ToList())
+            {
+                var accountFromReport = report.FirstOrDefault(x => x.AccountingRecord == account.Id);
+
+                await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                {
+                    Amount = accountFromReport.Saldo,
+                    DateTime = dateTime,
+                    From = account,
+                    To = cash
+                });
+
+                await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                {
+                    Amount = accountFromReport.Saldo,
+                    DateTime = dateTime,
+                    From = cash,
+                    To = null
+                });
+            }
         }
     }
 }

@@ -74,5 +74,18 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [HttpPut("DeliverSaldoToClients")]
+        public async Task<ActionResult> DeliverSaldoToClients()
+        {
+            await _unitOfWork.DepositRepository.DeliverSaldoToClients();
+
+            if (await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

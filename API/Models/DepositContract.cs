@@ -24,7 +24,7 @@ namespace API.Models
         public Currency Currency { get; set; }
 
         [Required]
-        public int Duration { get; set; }
+        public bool IsClosed { get; set; }
 
         [Required]
         public double Amount { get; set; }

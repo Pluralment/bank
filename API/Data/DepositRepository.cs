@@ -44,18 +44,22 @@ namespace API.Data
             {
                 RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Number == "3014"),
                 Name = $"{deposit.Client.Name} {deposit.Client.Surname}: текущий",
-                Number = Guid.NewGuid().ToString()
+                Number = ""
             };
 
             var percentAccount = new AccountingRecord()
             {
                 RecordType = _context.AccountingRecordTypes.FirstOrDefault(x => x.Number == "2400"),
                 Name = $"{deposit.Client.Name} {deposit.Client.Surname}: процентный",
-                Number = Guid.NewGuid().ToString()
+                Number = ""
             };
 
-            mainAccount = (await _context.AccountingRecords.AddAsync(mainAccount)).Entity;
-            percentAccount = (await _context.AccountingRecords.AddAsync(percentAccount)).Entity;
+            await _context.AccountingRecords.AddAsync(mainAccount);
+            await _context.AccountingRecords.AddAsync(percentAccount);
+            await _context.SaveChangesAsync();
+            
+            mainAccount.Number = $"3014{mainAccount.Id.ToString().PadLeft(9, '0')}";
+            percentAccount.Number = $"2400{percentAccount.Id.ToString().PadLeft(9, '0')}";
 
             await _context.DepositRecords.AddAsync(new DepositRecord()
             {
@@ -111,53 +115,19 @@ namespace API.Data
 
             var cash = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "1010");
             var bank = _context.AccountingRecords.Include(x => x.RecordType).FirstOrDefault(x => x.RecordType.Number == "7327");
+            var dateTime = _context.BankDateTime.FirstOrDefault().DateTime;
 
-
-
-            if (!deposit.DepositType.IsRevocable)
+            if (deposit.DepositType.IsRevocable && !deposit.IsClosed)
             {
                 await _context.AccountingEntries.AddAsync(new AccountingEntry()
                 {
-                    DateTime = deposit.EndDate,
-                    From = bank,
-                    To = percentAccount,
-                    Amount = deposit.Amount * deposit.DepositType.Interest * 0.01
-                });
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    DateTime = deposit.EndDate,
+                    DateTime = dateTime,
                     From = bank,
                     To = mainAccount,
                     Amount = deposit.Amount
                 });
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    DateTime = deposit.EndDate,
-                    From = percentAccount,
-                    To = cash,
-                    Amount = deposit.Amount * deposit.DepositType.Interest * 0.01
-                });
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    DateTime = deposit.EndDate,
-                    From = mainAccount,
-                    To = cash,
-                    Amount = deposit.Amount
-                });
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    DateTime = deposit.EndDate,
-                    From = cash,
-                    To = null,
-                    Amount = deposit.Amount * deposit.DepositType.Interest * 0.01
-                });
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    DateTime = deposit.EndDate,
-                    From = cash,
-                    To = null,
-                    Amount = deposit.Amount
-                });
+
+                deposit.IsClosed = true;
             }
 
             return _context.DepositContracts.FirstOrDefault(x => x.Id == deposit.Id);
@@ -171,6 +141,52 @@ namespace API.Data
         public async Task<IEnumerable<EntryReport>> GetEntriesReport()
         {
             return await _context.EntriesReport.FromSqlRaw($"GetEntries").ToListAsync();
+        }
+
+        public async Task CloseBankDay()
+        {
+            var bank = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "7327");
+            var cash = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "1010");
+            var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
+
+            // Зачислить проценты
+            await _context.DepositContracts.ForEachAsync(async contract =>
+            {
+                if (contract.IsClosed)
+                {
+                    return;
+                }
+
+                var mainAccount = _context.AccountingRecords
+                    .FirstOrDefault(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014").Record);
+                var percentAccount = _context.AccountingRecords
+                    .FirstOrDefault(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400").Record);
+                var interest = contract.DepositType.Interest;
+
+                if (contract.StartDate >= dateTime && contract.EndDate <= dateTime)
+                {
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = bank,
+                        To = percentAccount,
+                    });
+                }
+                else
+                {
+                    contract.IsClosed = true;
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = bank,
+                        To = mainAccount
+                    });
+                }
+            });
+
+            (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime = dateTime.AddDays(1);
         }
     }
 }

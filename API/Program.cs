@@ -32,6 +32,8 @@ namespace API
                 await Seed.SeedDepositTypes(context);
                 await Seed.SeedAccountingRecordTypes(context);
                 await Seed.SeedAccountingRecords(context);
+                await Seed.SeedBankDateTime(context);
+                await Seed.SeedAccountingEntries(context);
             }
             catch (Exception ex)
             {

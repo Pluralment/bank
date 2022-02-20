@@ -145,8 +145,38 @@ namespace API.Data
             var cashBox = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "1010");
             var bankFund = await context.AccountingRecordTypes.FirstOrDefaultAsync(x => x.Number == "7327");
 
-            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox, Number = "5623496", Name = "Касса" });
-            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund, Number = "7964852", Name = "Фонд развития банка" });
+            if (cashBox != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = cashBox, Number = "1010562349658", Name = "Касса" });
+            if (bankFund != null) await context.AccountingRecords.AddAsync(new AccountingRecord { RecordType = bankFund, Number = "7327796485223", Name = "Фонд развития банка" });
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedBankDateTime(DataContext context)
+        {
+            if (await context.BankDateTime.AnyAsync())
+            {
+                return;
+            }
+
+            await context.BankDateTime.AddAsync(new BankDateTime()
+            {
+                DateTime = new DateTime(2000, 1, 1)
+            });
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedAccountingEntries(DataContext context)
+        {
+            if (await context.AccountingEntries.AnyAsync())
+            {
+                return;
+            }
+
+            await context.AccountingEntries.AddAsync(new AccountingEntry()
+            {
+                DateTime = context.BankDateTime.FirstOrDefault().DateTime
+            });
+
             await context.SaveChangesAsync();
         }
     }

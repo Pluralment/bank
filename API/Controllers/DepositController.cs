@@ -62,5 +62,17 @@ namespace API.Controllers
             var result = await _unitOfWork.DepositRepository.GetEntriesReport();
             return Ok(result);
         }
+
+        [HttpPut("CloseBankDay")]
+        public async Task<ActionResult> CloseBankDay()
+        {
+            await _unitOfWork.DepositRepository.CloseBankDay();
+            if (await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

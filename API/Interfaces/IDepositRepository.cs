@@ -21,5 +21,7 @@ namespace API.Interfaces
         Task<IEnumerable<AccountReport>> GetAccountsReport();
 
         Task<IEnumerable<EntryReport>> GetEntriesReport();
+
+        Task CloseBankDay();
     }
 }

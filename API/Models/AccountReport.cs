@@ -10,6 +10,10 @@ namespace API.Models
     {
         public int AccountingRecord { get; set; }
 
+        public string Number { get; set; }
+
+        public string Name { get; set; }
+
         public double Debt { get; set; }
 
         public double Credit { get; set; }

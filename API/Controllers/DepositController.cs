@@ -16,6 +16,13 @@ namespace API.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<DepositContract>>> GetDepositList()
+        {
+            var result = await _unitOfWork.DepositRepository.GetDepositList();
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult<DepositContract>> CreateDeposit(DepositContract deposit)
         {

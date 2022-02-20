@@ -26,5 +26,6 @@ namespace API.Interfaces
 
         Task DeliverSaldoToClients();
 
+        Task<IEnumerable<DepositContract>> GetDepositList();
     }
 }

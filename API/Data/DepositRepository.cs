@@ -217,5 +217,14 @@ namespace API.Data
                 });
             }
         }
+
+        public async Task<IEnumerable<DepositContract>> GetDepositList()
+        {
+            return await _context.DepositContracts
+                .Include(x => x.Client)
+                .Include(x => x.Currency)
+                .Include(x => x.DepositType)
+                .ToListAsync();
+        }
     }
 }

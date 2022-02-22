@@ -190,13 +190,41 @@ namespace API.Data
             (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime = dateTime.AddDays(1);
         }
 
-        public async Task DeliverSaldoToClients()
+        public async Task ReturnPercentSaldoToClients()
+        {
+            await DeliverSaldoToClients("2400");
+        }
+
+        public async Task ReturnMainSaldoToClients()
+        {
+            await DeliverSaldoToClients("3014");
+        }
+
+        public async Task<IEnumerable<DepositContract>> GetDepositsByClientId(int id)
+        {
+            return await _context.DepositContracts
+                .Include(x => x.Currency)
+                .Include(x => x.DepositType)
+                .Where(x => x.Client.Id == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<DepositContract>> GetDepositList()
+        {
+            return await _context.DepositContracts
+                .Include(x => x.Client)
+                .Include(x => x.Currency)
+                .Include(x => x.DepositType)
+                .ToListAsync();
+        }
+
+
+        private async Task DeliverSaldoToClients(string recordTypeNumber)
         {
             var cash = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "1010");
             var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
             var report = _context.AccountsReport.FromSqlRaw("GetAccountsReport").ToList();
             foreach (var account in _context.AccountingRecords
-                .Where(x => x.RecordType.Number == "2400" || x.RecordType.Number == "3014").ToList())
+                .Where(x => x.RecordType.Number == recordTypeNumber).ToList())
             {
                 var accountFromReport = report.FirstOrDefault(x => x.AccountingRecord == account.Id);
 
@@ -216,15 +244,6 @@ namespace API.Data
                     To = null
                 });
             }
-        }
-
-        public async Task<IEnumerable<DepositContract>> GetDepositList()
-        {
-            return await _context.DepositContracts
-                .Include(x => x.Client)
-                .Include(x => x.Currency)
-                .Include(x => x.DepositType)
-                .ToListAsync();
         }
     }
 }

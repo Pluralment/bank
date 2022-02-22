@@ -107,5 +107,12 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet("GetDepositsByClientId/{id}")]
+        public async Task<ActionResult<IEnumerable<DepositContract>>> GetDepositsByClientId(int id)
+        {
+            var result = await _unitOfWork.DepositRepository.GetDepositsByClientId(id);
+            return Ok(result);
+        }
     }
 }

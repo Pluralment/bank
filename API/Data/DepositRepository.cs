@@ -200,6 +200,14 @@ namespace API.Data
             await DeliverSaldoToClients("3014");
         }
 
+        public async Task<IEnumerable<DepositContract>> GetDepositsByClientId(int id)
+        {
+            return await _context.DepositContracts
+                .Include(x => x.Currency)
+                .Include(x => x.DepositType)
+                .Where(x => x.Client.Id == id).ToListAsync();
+        }
+
         public async Task<IEnumerable<DepositContract>> GetDepositList()
         {
             return await _context.DepositContracts

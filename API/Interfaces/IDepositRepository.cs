@@ -29,5 +29,7 @@ namespace API.Interfaces
         Task ReturnMainSaldoToClients();
 
         Task<IEnumerable<DepositContract>> GetDepositList();
+
+        Task<IEnumerable<DepositContract>> GetDepositsByClientId(int id);
     }
 }

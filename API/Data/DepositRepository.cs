@@ -158,10 +158,10 @@ namespace API.Data
                 }
 
                 var mainAccount = await _context.AccountingRecords
-                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014").Record);
+                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014" && d.DepositContract == contract).Record);
                 
                 var percentAccount = await _context.AccountingRecords
-                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400").Record);
+                    .FirstOrDefaultAsync(rec => rec == rec.DepositRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400" && d.DepositContract == contract).Record);
                 var interest = contract.DepositType.Interest;
 
                 if (contract.StartDate <= dateTime && contract.EndDate >= dateTime)
@@ -170,7 +170,7 @@ namespace API.Data
                     {
                         DateTime = dateTime,
                         Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
-                        From = bank,
+                        From = bank, 
                         To = percentAccount,
                     });
                 }

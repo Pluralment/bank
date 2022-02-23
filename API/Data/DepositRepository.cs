@@ -154,7 +154,7 @@ namespace API.Data
             {
                 if (contract.IsClosed)
                 {
-                    return;
+                    continue;
                 }
 
                 var mainAccount = await _context.AccountingRecords

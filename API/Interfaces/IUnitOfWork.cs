@@ -14,6 +14,8 @@ namespace API.Interfaces
         ICountryRepository CountryRepository { get; }
         IInvalidityRepository InvalidityRepository { get; }
         IDepositRepository DepositRepository { get; }
+        IDepositTypeRepository DepositTypeRepository { get; }
+        ICurrencyRepository CurrencyRepository { get; }
         Task<bool> Complete();
 
         bool HasChanges();

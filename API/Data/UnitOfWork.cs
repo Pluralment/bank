@@ -27,6 +27,10 @@ namespace API.Data
 
         public IDepositRepository DepositRepository => new DepositRepository(_context);
 
+        public IDepositTypeRepository DepositTypeRepository => new DepositTypeRepository(_context);
+        
+        public ICurrencyRepository CurrencyRepository => new CurrencyRepository(_context);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

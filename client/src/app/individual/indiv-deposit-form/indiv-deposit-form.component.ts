@@ -103,9 +103,9 @@ export class IndivDepositFormComponent implements OnInit {
       client: client
     };
 
-    /* this.depositService.createDepositContract(depositContract).subscribe((createdDeposit: DepositContract) => {
+    this.depositService.createDepositContract(depositContract).subscribe((createdDeposit: DepositContract) => {
       console.log(createdDeposit);
-    }); */
+    });
     console.log(depositContract);
   }
 }

@@ -126,6 +126,20 @@ namespace API.Data
                     To = mainAccount,
                     Amount = deposit.Amount
                 });
+                await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                {
+                    DateTime = dateTime,
+                    From = mainAccount,
+                    To = cash,
+                    Amount = deposit.Amount
+                });
+                await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                {
+                    DateTime = dateTime,
+                    From = cash,
+                    To = null,
+                    Amount = deposit.Amount
+                });
 
                 deposit.IsClosed = true;
             }
@@ -173,6 +187,21 @@ namespace API.Data
                         From = bank, 
                         To = percentAccount,
                     });
+
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = percentAccount, 
+                        To = cash,
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = cash, 
+                        To = null,
+                    });
                 }
                 else if (contract.EndDate < dateTime)
                 {
@@ -183,6 +212,20 @@ namespace API.Data
                         Amount = contract.Amount,
                         From = bank,
                         To = mainAccount
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = mainAccount,
+                        To = cash
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = cash,
+                        To = null
                     });
                 }
             }

@@ -74,6 +74,7 @@ namespace API.Controllers
         public async Task<ActionResult> CloseBankDay()
         {
             await _unitOfWork.DepositRepository.CloseBankDay();
+            
             if (await _unitOfWork.Complete())
             {
                 return Ok();

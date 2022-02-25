@@ -1,0 +1,30 @@
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Номер</th>
+            <th scope="col">Валюта</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Процент</th>
+            <th scope="col">Начало</th>
+            <th scope="col">Окончание</th>
+            <th scope="col">Статус</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let deposit of depositContracts">
+            <th scope="row">{{deposit.number}}</th>
+            <td>{{deposit.currency.name}}</td>
+            <td>{{deposit.amount}}</td>
+            <td>{{deposit.depositType.interest}}</td>
+            <td>{{deposit.startDate}}</td>
+            <td>{{deposit.endDate}}</td>
+            <td>
+                <span *ngIf="!deposit.isClosed" class="badge rounded-pill bg-success">Активен</span>
+                <span *ngIf="deposit.isClosed" class="badge rounded-pill bg-light">Закрыт</span>
+            </td>
+            <td><button *ngIf="deposit.depositType.isRevocable && !deposit.isClosed" class="btn btn-danger btn-sm" (click)="closeDeposit(deposit.id)">Закрыть</button></td>
+        </tr>
+    </tbody>
+</table>

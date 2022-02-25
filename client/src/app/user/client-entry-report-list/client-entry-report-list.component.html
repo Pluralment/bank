@@ -1,0 +1,25 @@
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Время</th>
+            <th scope="col">Источник</th>
+            <th scope="col">Получатель</th>
+            <th scope="col">Источник: дебет</th>
+            <th scope="col">Источник: кредит</th>
+            <th scope="col">Получатель: дебет</th>
+            <th scope="col">Получатель: кредит</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of entryReports">
+            <td>{{entry.dateTime}}</td>
+            <td>{{entry.fromAccountName}}</td>
+            <td>{{entry.toAccountName}}</td>
+            <td>{{entry.fromDebt}}</td>
+            <td>{{entry.fromCredit}}</td>
+            <td>{{entry.toDebt}}</td>
+            <td>{{entry.toCredit}}</td>
+        </tr>
+    </tbody>
+</table>

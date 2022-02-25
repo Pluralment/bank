@@ -76,9 +76,9 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateClient(Client client)
+        public async Task<ActionResult> UpdateClient(Client updatedClient)
         {
-            _unitOfWork.ClientRepository.Update(client);
+            _unitOfWork.ClientRepository.Update(updatedClient);
 
             if (await _unitOfWork.Complete()) return NoContent();
 

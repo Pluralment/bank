@@ -1,0 +1,62 @@
+<h3>Депозитный договор</h3>
+
+<form [formGroup]="depositForm" (ngSubmit)="createDeposit()" autocomplete="off">
+    <div class="form-group">
+        <label class="form-label">Тип депозита</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="depositType" aria-describedby="" (change)="setAmountValidators()"
+                [formControl]='$any(depositForm).controls["depositType"]'>
+                <option *ngFor="let depositType of depositTypes" value={{depositType.id}}>{{depositType.name |
+                    titlecase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <app-text-input [label]='"Номер договора"' [formControl]='$any(depositForm).controls["number"]'>
+    </app-text-input>
+
+    <div class="form-group">
+        <label class="form-label">Валюта</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="currency" aria-describedby=""
+                [formControl]='$any(depositForm).controls["currency"]'>
+                <option *ngFor="let currency of currencies" value={{currency.id}}>{{currency.name | uppercase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- На основе срока вклада формируются даты начала и окончания договора -->
+    <!-- <app-text-input [label]='"Срок вклада"' type="number" [formControl]='$any(depositForm).controls["duration"]'>
+    </app-text-input> -->
+
+    <div class="mb-3 form-group">
+        <label>Дата начала</label>
+        <input class="form-control" type="date" [formControl]='$any(depositForm).controls["startDate"]'>
+    </div>
+
+    <div class="mb-3 form-group">
+        <label>Дата окончания</label>
+        <input class="form-control" type="date" [formControl]='$any(depositForm).controls["endDate"]'>
+    </div>
+
+    <app-text-input [label]='"Процент"' [formControl]='$any(depositForm).controls["interest"]'></app-text-input>
+
+    <app-text-input [label]='"Сумма"' tip="{{amountTip}}" type="number"
+        [formControl]='$any(depositForm).controls["amount"]'></app-text-input>
+
+    <div class="form-group">
+        <label class="form-label">Вкладчик</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="client" aria-describedby=""
+                [formControl]='$any(depositForm).controls["client"]'>
+                <option *ngFor="let client of clients" value={{client.id}}>{{client.name + " " + client.surname + " : "
+                    + client.identifyNumber | titlecase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <button [disabled]='!depositForm.valid || !depositForm.dirty' class="btn btn-outline-info btn-save mr-2 mb-2"
+            type="submit">Create deposit</button>
+    </div>
+</form>

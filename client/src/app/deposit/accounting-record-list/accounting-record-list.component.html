@@ -1,0 +1,21 @@
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Номер</th>
+            <th scope="col">Название</th>
+            <th scope="col">Дебет</th>
+            <th scope="col">Кредит</th>
+            <th scope="col">Сальдо</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let report of accountReports">
+            <th scope="row">{{report.number}}</th>
+            <td>{{report.name}}</td>
+            <td>{{report.debt}}</td>
+            <td>{{report.credit}}</td>
+            <td>{{report.saldo}}</td>
+        </tr>
+    </tbody>
+</table>

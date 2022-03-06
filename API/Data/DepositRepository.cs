@@ -163,7 +163,7 @@ namespace API.Data
             var cash = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "1010");
             var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
 
-            // Зачислить проценты
+            // Зачислить проценты депозита
             foreach (var contract in _context.DepositContracts.Include(x => x.DepositType).ToList())
             {
                 if (contract.IsClosed)
@@ -230,17 +230,76 @@ namespace API.Data
                 }
             }
 
+            // Зачислить проценты кредита
+            foreach (var contract in _context.CreditContracts.Include(x => x.CreditType).ToList())
+            {
+                if (contract.IsClosed)
+                {
+                    continue;
+                }
+
+                var mainAccount = await _context.AccountingRecords
+                    .FirstOrDefaultAsync(rec => rec == rec.CreditRecords.FirstOrDefault(d => d.Record.RecordType.Number == "3014" && d.CreditContract == contract).Record);
+
+                var percentAccount = await _context.AccountingRecords
+                    .FirstOrDefaultAsync(rec => rec == rec.CreditRecords.FirstOrDefault(d => d.Record.RecordType.Number == "2400" && d.CreditContract == contract).Record);
+                var interest = contract.CreditType.Interest;
+
+                if (contract.StartDate <= dateTime && contract.EndDate >= dateTime)
+                {
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = null,
+                        To = cash,
+                    });
+
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = cash,
+                        To = percentAccount,
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = (contract.Amount * (interest / 100)) / (DateTime.IsLeapYear(dateTime.Year) ? 366 : 365),
+                        From = percentAccount,
+                        To = bank,
+                    });
+                }
+                else if (contract.EndDate < dateTime)
+                {
+                    contract.IsClosed = true;
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = null,
+                        To = cash
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = cash,
+                        To = mainAccount
+                    });
+                    await _context.AccountingEntries.AddAsync(new AccountingEntry()
+                    {
+                        DateTime = dateTime,
+                        Amount = contract.Amount,
+                        From = mainAccount,
+                        To = bank
+                    });
+                }
+            }
+
+
+
             (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime = dateTime.AddDays(1);
-        }
-
-        public async Task ReturnPercentSaldoToClients()
-        {
-            await DeliverSaldoToClients("2400");
-        }
-
-        public async Task ReturnMainSaldoToClients()
-        {
-            await DeliverSaldoToClients("3014");
         }
 
         public async Task<IEnumerable<DepositContract>> GetDepositsByClientId(int id)
@@ -258,35 +317,6 @@ namespace API.Data
                 .Include(x => x.Currency)
                 .Include(x => x.DepositType)
                 .ToListAsync();
-        }
-
-
-        private async Task DeliverSaldoToClients(string recordTypeNumber)
-        {
-            var cash = await _context.AccountingRecords.FirstOrDefaultAsync(x => x.RecordType.Number == "1010");
-            var dateTime = (await _context.BankDateTime.FirstOrDefaultAsync()).DateTime;
-            var report = _context.AccountsReport.FromSqlRaw("GetAccountsReport").ToList();
-            foreach (var account in _context.AccountingRecords
-                .Where(x => x.RecordType.Number == recordTypeNumber).ToList())
-            {
-                var accountFromReport = report.FirstOrDefault(x => x.AccountingRecord == account.Id);
-
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    Amount = accountFromReport.Saldo,
-                    DateTime = dateTime,
-                    From = account,
-                    To = cash
-                });
-
-                await _context.AccountingEntries.AddAsync(new AccountingEntry()
-                {
-                    Amount = accountFromReport.Saldo,
-                    DateTime = dateTime,
-                    From = cash,
-                    To = null
-                });
-            }
         }
     }
 }

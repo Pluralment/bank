@@ -83,32 +83,6 @@ namespace API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("ReturnPercentSaldoToClients")]
-        public async Task<ActionResult> ReturnPercentSaldoToClients()
-        {
-            await _unitOfWork.DepositRepository.ReturnPercentSaldoToClients();
-
-            if (await _unitOfWork.Complete())
-            {
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-        [HttpPut("ReturnMainSaldoToClients")]
-        public async Task<ActionResult> ReturnMainSaldoToClients()
-        {
-            await _unitOfWork.DepositRepository.ReturnPercentSaldoToClients();
-
-            if (await _unitOfWork.Complete())
-            {
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
         [HttpGet("GetDepositsByClientId/{id}")]
         public async Task<ActionResult<IEnumerable<DepositContract>>> GetDepositsByClientId(int id)
         {

@@ -25,6 +25,10 @@ namespace API.Data
         public DbSet<EntryReport> EntriesReport { get; set; }
         public DbSet<BankDateTime> BankDateTime { get; set; }
 
+        public DbSet<CreditContract> CreditContracts { get; set; }
+        public DbSet<CreditRecord> CreditRecords { get; set; }
+        public DbSet<CreditType> CreditTypes { get; set; }
+
         public DataContext(DbContextOptions options) : base(options)
         {
         }
@@ -42,6 +46,19 @@ namespace API.Data
             builder.Entity<DepositRecord>()
                 .HasOne(x => x.Record)
                 .WithMany(x => x.DepositRecords)
+                .HasForeignKey(x => x.RecordId);
+
+            builder.Entity<CreditRecord>()
+                .HasKey(x => new { x.CreditContractId, x.RecordId });
+
+            builder.Entity<CreditRecord>()
+                .HasOne(x => x.CreditContract)
+                .WithMany(x => x.CreditRecords)
+                .HasForeignKey(x => x.CreditContractId);
+
+            builder.Entity<CreditRecord>()
+                .HasOne(x => x.Record)
+                .WithMany(x => x.CreditRecords)
                 .HasForeignKey(x => x.RecordId);
 
             builder.Entity<AccountReport>()

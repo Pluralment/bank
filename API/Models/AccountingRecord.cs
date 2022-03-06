@@ -20,6 +20,6 @@ namespace API.Models
         public AccountingRecordType RecordType { get; set; }
 
         public List<DepositRecord> DepositRecords { get; set; } = new List<DepositRecord>();
-
+        public List<CreditRecord> CreditRecords { get; set; } = new List<CreditRecord>();
     }
 }

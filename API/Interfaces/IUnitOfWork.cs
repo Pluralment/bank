@@ -16,6 +16,7 @@ namespace API.Interfaces
         IDepositRepository DepositRepository { get; }
         IDepositTypeRepository DepositTypeRepository { get; }
         ICurrencyRepository CurrencyRepository { get; }
+        ICreditRepository CreditRepository { get; }
         Task<bool> Complete();
 
         bool HasChanges();

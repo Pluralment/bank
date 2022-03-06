@@ -24,10 +24,6 @@ namespace API.Interfaces
 
         Task CloseBankDay();
 
-        Task ReturnPercentSaldoToClients();
-
-        Task ReturnMainSaldoToClients();
-
         Task<IEnumerable<DepositContract>> GetDepositList();
 
         Task<IEnumerable<DepositContract>> GetDepositsByClientId(int id);

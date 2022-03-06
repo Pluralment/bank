@@ -31,6 +31,8 @@ namespace API.Data
         
         public ICurrencyRepository CurrencyRepository => new CurrencyRepository(_context);
 
+        public ICreditRepository CreditRepository => new CreditRepository(_context);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

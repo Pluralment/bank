@@ -27,6 +27,8 @@ import { AccountingRecordListComponent } from './deposit/accounting-record-list/
 import { ClientEntryReportListComponent } from './user/client-entry-report-list/client-entry-report-list.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModeratorPageComponent } from './moderator/moderator-page/moderator-page.component';
+import { IndivCreditFormComponent } from './individual/indiv-credit-form/indiv-credit-form.component';
+import { ClientCreditListComponent } from './user/client-credit-list/client-credit-list.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ModeratorPageComponent } from './moderator/moderator-page/moderator-pag
     ClientDepositListComponent,
     AccountingRecordListComponent,
     ClientEntryReportListComponent,
-    ModeratorPageComponent
+    ModeratorPageComponent,
+    IndivCreditFormComponent,
+    ClientCreditListComponent
   ],
   imports: [
     BrowserModule,

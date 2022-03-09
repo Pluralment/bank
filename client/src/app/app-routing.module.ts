@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { IndivCreditFormComponent } from './individual/indiv-credit-form/indiv-credit-form.component';
 import { IndivDepositFormComponent } from './individual/indiv-deposit-form/indiv-deposit-form.component';
 import { ModeratorPageComponent } from './moderator/moderator-page/moderator-page.component';
 import { UserCreationComponent } from './user/user-creation/user-creation.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   ] },
   { path: 'individual', runGuardsAndResolvers: 'always', children: [
     { path: 'deposit', component: IndivDepositFormComponent },
+    { path: 'credit', component: IndivCreditFormComponent },
   ] },
   { path: 'moderator', runGuardsAndResolvers: 'always', children: [
     { path: '', component: ModeratorPageComponent },

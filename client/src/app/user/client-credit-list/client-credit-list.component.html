@@ -1,0 +1,29 @@
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Номер</th>
+            <th scope="col">Валюта</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Процент</th>
+            <th scope="col">Начало</th>
+            <th scope="col">Окончание</th>
+            <th scope="col">Статус</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let credit of creditContracts">
+            <th scope="row">{{credit.number}}</th>
+            <td>{{credit.currency.name}}</td>
+            <td>{{credit.amount}}</td>
+            <td>{{credit.creditType.interest}}</td>
+            <td>{{credit.startDate}}</td>
+            <td>{{credit.endDate}}</td>
+            <td>
+                <span *ngIf="!credit.isClosed" class="badge rounded-pill bg-success">Активен</span>
+                <span *ngIf="credit.isClosed" class="badge rounded-pill bg-light">Закрыт</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

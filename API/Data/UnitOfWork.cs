@@ -32,6 +32,8 @@ namespace API.Data
         public ICurrencyRepository CurrencyRepository => new CurrencyRepository(_context);
 
         public ICreditRepository CreditRepository => new CreditRepository(_context);
+        
+        public ICreditTypeRepository CreditTypeRepository => new CreditTypeRepository(_context);
 
         public async Task<bool> Complete()
         {

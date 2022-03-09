@@ -1,0 +1,14 @@
+[
+    {
+        "Name": "Аннуитетный кредит",
+        "Interest": 20.0,
+        "MinContribution": 200.0,
+        "MaxContribution": 10000.0
+    },
+    {
+        "Name": "Дифференцированный кредит",
+        "Interest": 23.8,
+        "MinContribution": 200.0,
+        "MaxContribution": 10000.0
+    }
+]

@@ -184,5 +184,21 @@ namespace API.Data
 
             await context.SaveChangesAsync();
         }
+
+        public static async Task SeedCreditTypes(DataContext context)
+        {
+            if (await context.CreditTypes.AnyAsync()) return;
+
+            var creditTypesData = await System.IO.File.ReadAllTextAsync("Data/Seeds/CreditTypesSeedData.json");
+            var creditTypes = JsonSerializer.Deserialize<List<CreditType>>(creditTypesData);
+            if (creditTypes == null) return;
+
+            foreach (var creditType in creditTypes)
+            {
+                await context.CreditTypes.AddAsync(creditType);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

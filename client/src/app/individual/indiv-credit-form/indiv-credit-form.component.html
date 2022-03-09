@@ -1,0 +1,58 @@
+<h3>Кредитный договор</h3>
+
+<form [formGroup]="creditForm" (ngSubmit)="createCredit()" autocomplete="off">
+    <div class="form-group">
+        <label class="form-label">Тип кредита</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="depositType" aria-describedby="" (change)="setAmountValidators()"
+                [formControl]='$any(creditForm).controls["creditType"]'>
+                <option *ngFor="let creditType of creditTypes" value={{creditType.id}}>{{creditType.name |
+                    titlecase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <app-text-input [label]='"Номер договора"' [formControl]='$any(creditForm).controls["number"]'>
+    </app-text-input>
+
+    <div class="form-group">
+        <label class="form-label">Валюта</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="currency" aria-describedby=""
+                [formControl]='$any(creditForm).controls["currency"]'>
+                <option *ngFor="let currency of currencies" value={{currency.id}}>{{currency.name | uppercase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3 form-group">
+        <label>Дата начала</label>
+        <input class="form-control" type="date" [formControl]='$any(creditForm).controls["startDate"]'>
+    </div>
+
+    <div class="mb-3 form-group">
+        <label>Дата окончания</label>
+        <input class="form-control" type="date" [formControl]='$any(creditForm).controls["endDate"]'>
+    </div>
+
+    <app-text-input [label]='"Процент"' [formControl]='$any(creditForm).controls["interest"]'></app-text-input>
+
+    <app-text-input [label]='"Сумма"' tip="{{amountTip}}" type="number"
+        [formControl]='$any(creditForm).controls["amount"]'></app-text-input>
+
+    <div class="form-group">
+        <label class="form-label">Вкладчик</label>
+        <div class="input-group mb-3" style="background: none; box-shadow: none">
+            <select class="form-select" name="client" aria-describedby=""
+                [formControl]='$any(creditForm).controls["client"]'>
+                <option *ngFor="let client of clients" value={{client.id}}>{{client.name + " " + client.surname + " : "
+                    + client.identifyNumber | titlecase}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <button [disabled]='!creditForm.valid || !creditForm.dirty' class="btn btn-outline-info btn-save mr-2 mb-2"
+            type="submit">Create credit</button>
+    </div>
+</form>
